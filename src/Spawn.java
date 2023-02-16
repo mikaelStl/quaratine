@@ -9,37 +9,27 @@ public class Spawn {
             float rand2 =  (float) (Math.random() * 1);
 
             Zombie z = enemies.get(rand);
-            if (rand2 < 0.5 && (z.getBandage() == null) ^ (z.getAmmo() != null)) {
-                z.setBandage(new Bandage("imgs/bandage.png"));
-            } else if (rand2 > 0.5 && (z.getBandage() != null) ^ (z.getAmmo() == null)){
-                z.setAmmo(new Ammo("imgs/ammo.png"));
+            if (rand2 < 0.5 && (z.getItem() == null)) {
+                z.setItem(new Bandage("imgs/bandage.png"));
+            } else if (rand2 > 0.5 && (z.getItem() == null)){
+                z.setItem(new Ammo("imgs/ammo.png"));
             }
         }
     }
 
-    public Bandage spawnBandage(Zombie z){
-        if (z.getBandage() != null) {
-            Bandage b = z.getBandage();
-            b.setX (z.getX() + (z.getW()/2));
-            b.setY(z.getY()+ z.getH());
-            return b;
-        } else {
-            return null;
-        }
-    }
-    public Ammo spawnAmmo(Zombie z){
-        if (z.getAmmo() != null) {
-            Ammo a = z.getAmmo();
-            a.setX (z.getX() + (z.getW()/2));
-            a.setY(z.getY() + z.getH());
-            return a;
+    public Item spawnItem(Zombie z){
+        if (z.getItem() != null) {
+            Item i = z.getItem();
+            i.setX(z.getX() + (z.getW()/2));
+            i.setY(z.getY()+ z.getH());
+            return i;
         } else {
             return null;
         }
     }
 
     public void spawnZombie(List<Zombie> enemies){
-        int quant = 1;
+        int quant = 12;
 
         for (int i = 0; i < quant; i++) {
             enemies.add(new Zombie(generateX(), generateY()));

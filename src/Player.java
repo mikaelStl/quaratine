@@ -11,7 +11,7 @@ public class Player extends Entity implements ActionListener{
     private int mvX, mvY;
     private Weapon weapon;
     private int direction;
-    private List<Bandage> inventory;
+    private List<Item> inventory;
 
     private Timer timer;
 
@@ -29,7 +29,7 @@ public class Player extends Entity implements ActionListener{
         setPositionY(y, h);
         setDirection(1);
 
-        this.inventory = new ArrayList<Bandage>();
+        this.inventory = new ArrayList<Item>();
 
         weapon = new Weapon();
         
@@ -87,14 +87,14 @@ public class Player extends Entity implements ActionListener{
         }
     }
     // Adicionar item ao inventario
-    public void addItem(Bandage b){
-        this.inventory.add(b);
+    public void addItem(Item i){
+        this.inventory.add(i);
     }
     //Usar bandagem
     public void useBandage(){
         if (inventory.size() > 0) {
             int cont = 0;
-            Bandage b = inventory.get(cont);
+            Item b = inventory.get(cont);
             if (lifeValue < LIFE_MAX) {
                 b.function(getPlayer());
                 this.inventory.remove(cont);

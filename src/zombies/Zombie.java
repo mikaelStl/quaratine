@@ -3,9 +3,8 @@ import javax.swing.Timer;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Zombie extends Entity implements Creature, ActionListener{
-    private Bandage bandage;
-    private Ammo ammo;
+public class Zombie extends Entity implements ActionListener{
+    private Item item;
     protected int damage;
     protected Player p;
 
@@ -23,8 +22,7 @@ public class Zombie extends Entity implements Creature, ActionListener{
         this.x = x;
         this.dead = false;
 
-        this.bandage = null;
-        this.ammo = null;
+        this.item = null;
 
         setLifeBar(getW(), getLife());
     
@@ -85,7 +83,6 @@ public class Zombie extends Entity implements Creature, ActionListener{
         }
     }
     //Método para atacar
-    @Override
     public void attack(Player p){
         p.takeDamage(damage);
     }
@@ -99,17 +96,11 @@ public class Zombie extends Entity implements Creature, ActionListener{
         return ((zPosition > this.positionY) ^ (zPosition < this.positionY));
     }
     //Metodos especiais para o objeto item
-    public Bandage getBandage() {
-        return bandage;
+    public Item getItem() {
+        return item;
     }
-    public void setBandage(Bandage b) {
-        this.bandage = b;
-    }
-    public Ammo getAmmo() {
-        return ammo;
-    }
-    public void setAmmo(Ammo a) {
-        this.ammo = a;
+    public void setItem(Item i) {
+        this.item = i;
     }
     /* MUDAR ISSO */
     public void setPlayer(Player p) {

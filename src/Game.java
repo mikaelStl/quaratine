@@ -21,8 +21,7 @@ public class Game extends JPanel implements ActionListener{
     private Player player;
     private Timer timer;
     private List<Zombie> zombies;
-    private List<Ammo> ammo;
-    private List<Bandage> bandages;
+    private List<Item> items;
     private Spawn spawn;
 
     public Game(){
@@ -35,8 +34,7 @@ public class Game extends JPanel implements ActionListener{
         player = new Player();
 
         zombies = new ArrayList<Zombie>();
-        ammo = new ArrayList<Ammo>();
-        bandages = new ArrayList<Bandage>();
+        items = new ArrayList<Item>();
         
         spawn = new Spawn();
         spawn.spawnZombie(zombies);
@@ -53,16 +51,10 @@ public class Game extends JPanel implements ActionListener{
         graphics.drawImage(background, 0, 0, null);
 
         if (player.isDead() == false) {
-            for (int q = 0; q < bandages.size(); q++){
-                Bandage bandage = bandages.get(q);
-                if (bandage != null) {
-                    graphics.drawImage(bandage.getItemImg(), bandage.getX(), bandage.getY(), this);
-                }
-            }
-            for (int u = 0; u < ammo.size(); u++){
-                Ammo am = ammo.get(u);
-                if (am != null) {
-                    graphics.drawImage(am.getItemImg(), am.getX(), am.getY(), this);
+            for (int q = 0; q < items.size(); q++){
+                Item item = items.get(q);
+                if (item != null) {
+                    graphics.drawImage(item.getItemImg(), item.getX(), item.getY(), this);
                 }
             }
 
@@ -147,10 +139,8 @@ public class Game extends JPanel implements ActionListener{
                     if (shotBox.intersects(zombieBox)) {
                         shot.hitZombie(zombie);
                         if (zombie.getLife() <= 0) {
-                            if (zombie.getBandage() != null) {
-                                bandages.add(spawn.spawnBandage(zombie));
-                            } else if(zombie.getAmmo() != null){
-                                ammo.add(spawn.spawnAmmo(zombie));
+                            if (zombie.getItem() != null) {
+                                items.add(spawn.spawnItem(zombie));
                             }
                             zombies.remove(s);
                             zombieBox = null;
@@ -162,27 +152,16 @@ public class Game extends JPanel implements ActionListener{
             }
         }
 
-        for (int f = 0; f < bandages.size(); f++) {
-            Bandage b = bandages.get(f);
-            if (b != null) {
-                itemBox = b.getBounds();
+        for (int f = 0; f < items.size(); f++) {
+            Item item = items.get(f);
+            if (item != null) {
+                itemBox = item.getBounds();
                 if (touch(playerBox, itemBox)) {
-                    player.addItem(b);
-                    bandages.remove(f);
+                    player.addItem(item);
+                    items.remove(f);
                 }
             }
         }
-        for (int w = 0; w < ammo.size(); w++) {
-            Ammo a = ammo.get(w);
-            if (a != null) {
-                itemBox = a.getBounds();
-                if (touch(playerBox, itemBox)) {
-                    a.function(player);
-                    ammo.remove(w);
-                }
-            }
-        }
-
     }
     public boolean touch(Rectangle objBounds1, Rectangle objBounds2){
         return objBounds2.intersects(objBounds1);
