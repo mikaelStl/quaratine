@@ -39,7 +39,7 @@ public class Spawn {
     }
 
     public void spawnZombie(List<Zombie> enemies){
-        int quant = 12;
+        int quant = 1;
 
         for (int i = 0; i < quant; i++) {
             enemies.add(new Zombie(generateX(), generateY()));

@@ -3,7 +3,7 @@ import javax.swing.Timer;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Zombie extends Entity implements ActionListener{
+public class Zombie extends Entity implements Creature, ActionListener{
     private Bandage bandage;
     private Ammo ammo;
     protected int damage;
@@ -85,6 +85,7 @@ public class Zombie extends Entity implements ActionListener{
         }
     }
     //Método para atacar
+    @Override
     public void attack(Player p){
         p.takeDamage(damage);
     }

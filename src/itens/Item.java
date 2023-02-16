@@ -14,8 +14,6 @@ public abstract class Item {
         this.h = getItemImg().getHeight(null);
         this.w = getItemImg().getWidth(null);
     }
-    //funcionalidade do item
-    public abstract void function(Player p);
     //Definindo colisor
     public Rectangle getBounds(){
         return new Rectangle(x, y, w, h);

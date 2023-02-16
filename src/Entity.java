@@ -15,7 +15,7 @@ public abstract class Entity {
     protected int positionX;
     protected int positionY;
         
-    public void takeDamage(int damage){}
+    public abstract void takeDamage(int damage);
     //Getter e Setter bara barra de vida
     public void setLifeBar(int width/*Tamanho atual da barra*/, int newLife/*vida após modificação*/) {
         int tamBar = (width * newLife)/LIFE_MAX;

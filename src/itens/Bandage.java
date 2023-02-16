@@ -1,4 +1,4 @@
-public class Bandage extends Item{
+public class Bandage extends Item implements ItemFunction{
     public Bandage(String url) {
         super(url);
         this.value = 30;

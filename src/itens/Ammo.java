@@ -1,4 +1,4 @@
-public class Ammo extends Item{
+public class Ammo extends Item implements ItemFunction{
     public Ammo(String url) {
         super(url);
         this.value = 30;
