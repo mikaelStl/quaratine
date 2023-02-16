@@ -4,11 +4,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class Zombie extends Entity implements ActionListener{
+    private final int VELOCITY = 1;
+    
     private Item item;
     protected int damage;
     protected Player p;
 
-    private Timer timer;
+    protected Timer timer;
 
     //Construtor
     public Zombie(int x, int y){
@@ -43,15 +45,15 @@ public class Zombie extends Entity implements ActionListener{
         
         if (!touchZombie && checkZColisionX(z)) {
             if ((playerPosition > getPsX())) {
-                x += 1;
+                x += VELOCITY;
             }else if ((playerPosition < getPsX())) {
-               x -= 1;
+               x -= VELOCITY;
             } else if (playerPosition == this.positionX){
                 y += 0;
             }
         }
         if (z.getPsX() == this.positionX) {
-            x -= 1;
+            x -= VELOCITY;
         }
     }
     public void walkY(Player p, Zombie z){
@@ -61,15 +63,15 @@ public class Zombie extends Entity implements ActionListener{
         
         if (!touchZombie && checkZColisionY(z)) {
             if (playerPosition > getPsY()) {
-                y += 1;
+                y += VELOCITY;
             } else if (playerPosition < getPsY()) {
-                y -= 1;
+                y -= VELOCITY;
             } else if (playerPosition == getPsY()){
                 x += 0;
             }
         }
         if (z.getPsY() == this.positionY) {
-            y -= 1;
+            y -= VELOCITY;
         }
     }
     /*Método para baixar vida*/

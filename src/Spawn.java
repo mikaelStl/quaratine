@@ -28,6 +28,10 @@ public class Spawn {
         }
     }
 
+    public void spawnToxicArea(List<ToxicArea> toxic){
+
+    }
+
     public void spawnZombie(List<Zombie> enemies){
         int quant = 12;
 
