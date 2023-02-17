@@ -52,9 +52,6 @@ public class Zombie extends Entity implements ActionListener{
                 y += 0;
             }
         }
-        if (z.getPsX() == this.positionX) {
-            x -= VELOCITY;
-        }
     }
     public void walkY(Player p, Zombie z){
         setPositionY(y, h);
@@ -70,9 +67,10 @@ public class Zombie extends Entity implements ActionListener{
                 x += 0;
             }
         }
-        if (z.getPsY() == this.positionY) {
-            y -= VELOCITY;
-        }
+    }
+    public void stop() {
+        y += 0;
+        x += 0;
     }
     /*Método para baixar vida*/
     @Override
