@@ -14,6 +14,7 @@ import javax.swing.Timer;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 public class Game extends JPanel implements ActionListener{
     private Image background;
@@ -127,6 +128,14 @@ public class Game extends JPanel implements ActionListener{
         Rectangle zombieBox;
         Rectangle shotBox;
         Rectangle itemBox;
+
+        for (Zombie z : zombies) {
+            zombieBox = z.getBounds();
+
+            if (zombieBox.intersects(playerBox)){
+
+            }
+        }
 
         List<Shot> shots = player.getWeapon().getShots();
         for (int m = 0; m < shots.size(); m++) {

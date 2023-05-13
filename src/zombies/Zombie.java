@@ -1,16 +1,16 @@
-import javax.swing.Timer;
+// import javax.swing.Timer;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+// import java.awt.event.ActionListener;
+// import java.awt.event.ActionEvent;
 
-public class Zombie extends Entity implements ActionListener{
+public class Zombie extends Entity /* implements ActionListener */{
     private final int VELOCITY = 1;
     
     private Item item;
     protected int damage;
     protected Player p;
 
-    protected Timer timer;
+    // protected Timer timer;
 
     //Construtor
     public Zombie(int x, int y){
@@ -28,16 +28,17 @@ public class Zombie extends Entity implements ActionListener{
 
         setLifeBar(getW(), getLife());
     
-        timer = new Timer(800, this);
-        timer.start();
+        // timer = new Timer(800, this);
+        // timer.start();
     }
-    @Override
-    public void actionPerformed(ActionEvent e){
-        if (p.getBounds().intersects(getBounds())) {
-            attack(p);
-        }
-    }
-    //Método para se mover
+    
+    // @Override
+    // public void actionPerformed(ActionEvent e){
+    //     if (p.getBounds().intersects(getBounds())) {
+    //         attack(p);
+    //     }
+    // }
+    // Método para se mover
     public void walkX(Player p, Zombie z){
         setPositionX(x, w);
         int playerPosition = p.getPsX();
