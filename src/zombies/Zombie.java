@@ -42,7 +42,7 @@ public class Zombie extends Entity implements ActionListener {
     public void walkX(Player p){
         setPositionX(x, w);
         int playerPosition = p.getPsX();
-        // boolean touchZombie = z.getBounds().intersects(getBounds());
+        
         if (playerPosition > getPsX()) {
             x += velocity;
         }else if ((playerPosition < getPsX())) {
@@ -51,18 +51,18 @@ public class Zombie extends Entity implements ActionListener {
             y += 0;
         }
     }
-        public void walkY(Player p){
-            setPositionY(y, h);
-            int playerPosition = p.getPsY();
-            // boolean touchZombie = z.getBounds().intersects(getBounds());
-                if (playerPosition > getPsY()) {
-                    y += velocity;
-                } else if (playerPosition < getPsY()) {
-                    y -= velocity;
-                } else if (playerPosition == getPsY()){
-                    x += 0;
-                }
+    public void walkY(Player p){
+        setPositionY(y, h);
+        int playerPosition = p.getPsY();
+        
+        if (playerPosition > getPsY()) {
+            y += velocity;
+        } else if (playerPosition < getPsY()) {
+             y -= velocity;
+        } else if (playerPosition == getPsY()){
+            x += 0;
         }
+    }
 
     // public void walkX(Player p, Zombie z){
     //     setPositionX(x, w);
