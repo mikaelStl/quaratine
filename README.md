@@ -1,4 +1,4 @@
-### Título: Zombified
+### <img src = "src/imgs/icon.png" alt = "icone" style = "width: 52px;"> Zombified
 
 #### Tema: Jogo/Zumbis
 

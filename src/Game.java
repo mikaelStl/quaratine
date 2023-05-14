@@ -22,6 +22,7 @@ public class Game extends JPanel implements ActionListener{
     private Timer timer;
     private List<Zombie> zombies;
     private List<Item> items;
+    private List<Shot> shots;
     private Spawn spawn;
 
     public Game(){
@@ -35,6 +36,7 @@ public class Game extends JPanel implements ActionListener{
 
         zombies = new ArrayList<Zombie>();
         items = new ArrayList<Item>();
+        shots = player.getWeapon().getShots();
         
         spawn = new Spawn();
         spawn.spawnZombie(zombies);
@@ -42,7 +44,7 @@ public class Game extends JPanel implements ActionListener{
 
         addKeyListener(new Keyboard());
 
-        timer = new Timer(20, this);
+        timer = new Timer(15, this);
         timer.start();
     }
     //Método para imprimir objetos na tela
@@ -51,33 +53,31 @@ public class Game extends JPanel implements ActionListener{
         graphics.drawImage(background, 0, 0, null);
 
         if (player.isDead() == false) {
-            for (int q = 0; q < items.size(); q++){
-                Item item = items.get(q);
+            //Desenhando Player
+            graphics.drawImage(player.getImg(), player.getX(), player.getY(), this);
+            graphics.setColor(new Color(225, 0, 0));
+                graphics.fill(player.getLifeBar());
+                graphics.draw(player.getLifeBar());
+            
+            //Desenhando itens
+            for (Item item : items) {
                 if (item != null) {
                     graphics.drawImage(item.getItemImg(), item.getX(), item.getY(), this);
                 }
             }
 
-            for (int j = 0; j < zombies.size(); j++) {
-                Zombie z = zombies.get(j);
+            //Desenhando Zumbis
+            for (Zombie z : zombies) {
                 graphics.drawImage(z.getImg(), z.getX(), z.getY(), this);
                     graphics.setColor(new Color(225, 0, 0));
                         graphics.fill(z.getLifeBar());
                         graphics.draw(z.getLifeBar());
-                    graphics.setColor(Color.black);
-                        graphics.draw(z.getBounds());
             }
-        
-            List<Shot> shots = player.getWeapon().getShots();
-            for (int p = 0; p < shots.size(); p++) {
-                Shot s = shots.get(p);
+
+            //Desenhando Tiros
+            for (Shot s : shots) {
                 graphics.drawImage(s.getImg(), s.getX(), s.getY(), this);
             }
-        
-            graphics.drawImage(player.getImg(), player.getX(), player.getY(), this);
-            graphics.setColor(new Color(225, 0, 0));
-                graphics.fill(player.getLifeBar());
-                graphics.draw(player.getLifeBar());
         } else {
             ImageIcon ref = new ImageIcon(getClass().getResource("imgs/dead.png"));
             dead = ref.getImage();
@@ -85,7 +85,7 @@ public class Game extends JPanel implements ActionListener{
         }
         g.dispose();
     }
-    //Método para imprimir objetos na tela
+    //Método para atualizar o jogo em tempo real
     @Override
     public void actionPerformed(ActionEvent e){
         int cont = 0;
@@ -94,7 +94,6 @@ public class Game extends JPanel implements ActionListener{
         player.move();
         player.setLifeBar(player.getW(), player.getLife());
 
-        List<Shot> shots = player.getWeapon().getShots();
         for (int o = 0; o < shots.size(); o++) {
             Shot s = shots.get(o);
             s.shot();
@@ -102,17 +101,21 @@ public class Game extends JPanel implements ActionListener{
                 shots.remove(o);
             }
         }
-        
+
         while (cont != zombies.size()) {
             Zombie z = zombies.get(cont);
             Zombie tempZ = zombies.get(aux);
             z.setLifeBar(z.getW(), z.getLife());
             if (z.isDead() == false) {
                 if (!touch(player.getBounds(), z.getBounds())) {
-                    z.walkX(player, tempZ);
-                    z.walkY(player, tempZ);
+                    // z.walkX(player, tempZ);
+                    // z.walkY(player, tempZ);
+                    z.walkX(player);
+                    z.walkY(player);
+                } else if (z.getBounds().intersects(tempZ.getBounds())) {
+                    z.stop();
                 }
-                z.setPlayer(player);   
+                z.setPlayer(player);
             }
             aux = cont;
             cont++;
@@ -121,22 +124,21 @@ public class Game extends JPanel implements ActionListener{
         checkColision();
         repaint();
     }
-    //Metódo para Checar colição
+    //Metódo para checar colisão
     public void checkColision(){
         Rectangle playerBox = player.getBounds();
         Rectangle zombieBox;
         Rectangle shotBox;
         Rectangle itemBox;
 
-        for (int z = 0; z < zombies.size(); z++) {
-            Zombie zombie = zombies.get(z);
-            zombieBox = zombie.getBounds();
-            if (zombieBox.intersects(playerBox)){
-                zombie.attack(player);
-            }
-        }
+        // for (int z = 0; z < zombies.size(); z++) {
+        //     Zombie zombie = zombies.get(z);
+        //     zombieBox = zombie.getBounds();
+        //     if (zombieBox.intersects(playerBox)){
+        //         zombie.attack(player);
+        //     }
+        // }
 
-        List<Shot> shots = player.getWeapon().getShots();
         for (int m = 0; m < shots.size(); m++) {
             Shot shot = shots.get(m);
             shotBox = shot.getBounds();
@@ -152,7 +154,6 @@ public class Game extends JPanel implements ActionListener{
                             }
                             zombies.remove(s);
                             zombieBox = null;
-                            System.out.println(zombieBox);
                         }
                         shots.remove(m);
                     }
@@ -174,7 +175,7 @@ public class Game extends JPanel implements ActionListener{
     public boolean touch(Rectangle objBounds1, Rectangle objBounds2){
         return objBounds2.intersects(objBounds1);
     }
-    //Metódo para desenhar munição
+    //Classe para receber as teclas do teclado
     public class Keyboard extends KeyAdapter{
         public int getKey(KeyEvent key){
             int keyCode = key.getKeyCode();

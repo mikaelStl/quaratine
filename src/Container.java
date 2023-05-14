@@ -1,13 +1,11 @@
-import java.awt.Image;
-import java.awt.Toolkit;
-
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class Container extends JFrame {
     public Container(){
-        Image icone = Toolkit.getDefaultToolkit().getImage(getClass().getResource("imgs/icon.png"));
+        ImageIcon icone = new ImageIcon(getClass().getResource("imgs/icon.png"));
         add(new Game());
-        setIconImage(icone);
+        setIconImage(icone.getImage());
         setTitle("Zombified");
         setSize(640, 640);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

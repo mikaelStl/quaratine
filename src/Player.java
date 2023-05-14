@@ -21,7 +21,7 @@ public class Player extends Entity implements ActionListener{
         this.h = getImg().getHeight(null);
         this.w = getImg().getWidth(null);
         this.lifeValue = 100;
-        this.LIFE_MAX = lifeValue;
+        this.life_max = lifeValue;
         this.x = 320-h;
         this.y = 320-w;
         this.dead = false;
@@ -45,8 +45,8 @@ public class Player extends Entity implements ActionListener{
     }
     //Métodos para se mover
     public void move(){
-            x += mvX;
-            y += mvY;
+        x += mvX;
+        y += mvY;
     }
     public void walk(int keyCode){
         switch (keyCode) {
@@ -95,7 +95,7 @@ public class Player extends Entity implements ActionListener{
         if (inventory.size() > 0) {
             int cont = 0;
             Item b = inventory.get(cont);
-            if (lifeValue < LIFE_MAX) {
+            if (lifeValue < life_max) {
                 b.function(getPlayer());
                 this.inventory.remove(cont);
                 cont++;

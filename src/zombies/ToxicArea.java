@@ -9,6 +9,7 @@ public class ToxicArea{
     private Image acidImg;
 
     public ToxicArea(int x, int y){
+        setAcidImg("imgs/acidArea.png");
         this.x = x;
         this.y = y;
         this.acidDamage = 2;

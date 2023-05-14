@@ -10,7 +10,7 @@ public abstract class Entity {
     protected int h, w;
     protected int lifeValue;
     protected Rectangle lifeBar;
-    protected int LIFE_MAX;
+    protected int life_max;
     protected boolean dead;
     protected int positionX;
     protected int positionY;
@@ -18,7 +18,7 @@ public abstract class Entity {
     public abstract void takeDamage(int damage);
     //Getter e Setter bara barra de vida
     public void setLifeBar(int width/*Tamanho atual da barra*/, int newLife/*vida após modificação*/) {
-        int tamBar = (width * newLife)/LIFE_MAX;
+        int tamBar = (width * newLife)/life_max;
         this.lifeBar = new Rectangle(getX(), (getY()-9), tamBar, 3);
     }
     public Rectangle getLifeBar() {

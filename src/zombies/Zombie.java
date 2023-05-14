@@ -1,16 +1,15 @@
-// import javax.swing.Timer;
+import javax.swing.Timer;
 
-// import java.awt.event.ActionListener;
-// import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Zombie extends Entity /* implements ActionListener */{
-    private final int VELOCITY = 1;
-    
+public class Zombie extends Entity implements ActionListener {    
     private Item item;
     protected int damage;
     protected Player p;
+    protected int velocity;
 
-    // protected Timer timer;
+    protected Timer timer;
 
     //Construtor
     public Zombie(int x, int y){
@@ -18,8 +17,9 @@ public class Zombie extends Entity /* implements ActionListener */{
         this.h = getImg().getHeight(null);
         this.w = getImg().getWidth(null);
         this.lifeValue = 100;
-        this.LIFE_MAX = lifeValue;
+        this.life_max = lifeValue;
         this.damage = 5;
+        this.velocity = 1;
         this.y = y;
         this.x = x;
         this.dead = false;
@@ -28,50 +28,74 @@ public class Zombie extends Entity /* implements ActionListener */{
 
         setLifeBar(getW(), getLife());
     
-        // timer = new Timer(800, this);
-        // timer.start();
+        timer = new Timer(800, this);
+        timer.start();
     }
     
-    // @Override
-    // public void actionPerformed(ActionEvent e){
-    //     if (p.getBounds().intersects(getBounds())) {
-    //         attack(p);
-    //     }
-    // }
+    @Override
+    public void actionPerformed(ActionEvent e){
+        if (p.getBounds().intersects(getBounds())) {
+            attack(p);
+        }
+    }
     // Método para se mover
-    public void walkX(Player p, Zombie z){
+    public void walkX(Player p){
         setPositionX(x, w);
         int playerPosition = p.getPsX();
-        boolean touchZombie = z.getBounds().intersects(getBounds());
-        
-        if (!touchZombie && checkZColisionX(z)) {
-            if ((playerPosition > getPsX())) {
-                x += VELOCITY;
-            }else if ((playerPosition < getPsX())) {
-               x -= VELOCITY;
-            } else if (playerPosition == this.positionX){
-                y += 0;
-            }
+        // boolean touchZombie = z.getBounds().intersects(getBounds());
+        if (playerPosition > getPsX()) {
+            x += velocity;
+        }else if ((playerPosition < getPsX())) {
+            x -= velocity;
+        } else if (playerPosition == this.positionX){
+            y += 0;
         }
     }
-    public void walkY(Player p, Zombie z){
-        setPositionY(y, h);
-        int playerPosition = p.getPsY();
-        boolean touchZombie = z.getBounds().intersects(getBounds());
-        
-        if (!touchZombie && checkZColisionY(z)) {
-            if (playerPosition > getPsY()) {
-                y += VELOCITY;
-            } else if (playerPosition < getPsY()) {
-                y -= VELOCITY;
-            } else if (playerPosition == getPsY()){
-                x += 0;
-            }
+        public void walkY(Player p){
+            setPositionY(y, h);
+            int playerPosition = p.getPsY();
+            // boolean touchZombie = z.getBounds().intersects(getBounds());
+                if (playerPosition > getPsY()) {
+                    y += velocity;
+                } else if (playerPosition < getPsY()) {
+                    y -= velocity;
+                } else if (playerPosition == getPsY()){
+                    x += 0;
+                }
         }
-    }
+
+    // public void walkX(Player p, Zombie z){
+    //     setPositionX(x, w);
+    //     int playerPosition = p.getPsX();
+    //     boolean touchZombie = z.getBounds().intersects(getBounds());
+        
+    //     if (!touchZombie && checkZColisionX(z)) {
+    //         if ((playerPosition > getPsX())) {
+    //             x += velocity;
+    //         }else if ((playerPosition < getPsX())) {
+    //            x -= velocity;
+    //         } else if (playerPosition == this.positionX){
+    //             stop();
+    //         }
+    //     }
+    // }
+    // public void walkY(Player p, Zombie z){
+    //     setPositionY(y, h);
+    //     int playerPosition = p.getPsY();
+    //     boolean touchZombie = z.getBounds().intersects(getBounds());
+        
+    //     if (!touchZombie && checkZColisionY(z)) {
+    //         if (playerPosition > getPsY()) {
+    //             y += velocity;
+    //         } else if (playerPosition < getPsY()) {
+    //             y -= velocity;
+    //         } else if (playerPosition == getPsY()){
+    //             stop();
+    //         }
+    //     }
+    // }
     public void stop() {
-        y += 0;
-        x += 0;
+        this.velocity = 0;
     }
     /*Método para baixar vida*/
     @Override
