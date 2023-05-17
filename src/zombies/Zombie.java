@@ -1,15 +1,7 @@
-import javax.swing.Timer;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-public class Zombie extends Entity implements ActionListener {    
+public class Zombie extends Entity {    
     private Item item;
     protected int damage;
-    protected Player p;
-    protected int velocity;
-
-    protected Timer timer;
+    protected long delay;
 
     //Construtor
     public Zombie(int x, int y){
@@ -26,18 +18,17 @@ public class Zombie extends Entity implements ActionListener {
 
         this.item = null;
 
+        this.delay = 800;
+
         setLifeBar(getW(), getLife());
-    
-        timer = new Timer(800, this);
-        timer.start();
     }
     
-    @Override
-    public void actionPerformed(ActionEvent e){
-        if (p.getBounds().intersects(getBounds())) {
-            attack(p);
-        }
-    }
+    // @Override
+    // public void actionPerformed(ActionEvent e){
+    //     if (p.getBounds().intersects(getBounds())) {
+    //         attack(p);
+    //     }
+    // }
     // Método para se mover
     public void walkX(Player p){
         setPositionX(x, w);
@@ -59,7 +50,7 @@ public class Zombie extends Entity implements ActionListener {
             y += velocity;
         } else if (playerPosition < getPsY()) {
              y -= velocity;
-        } else if (playerPosition == getPsY()){
+        } else if (playerPosition == this.positionY/*getPsY()*/){
             x += 0;
         }
     }
@@ -104,22 +95,27 @@ public class Zombie extends Entity implements ActionListener {
             this.lifeValue -= damage;
             setLifeBar(getBarWidth(), this.lifeValue);
         } else if (lifeValue <= 0) {
-            setDead();
+            Dead();
         }
     }
     //Método para atacar
     public void attack(Player p){
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         p.takeDamage(damage);
     }
 
-    public boolean checkZColisionX(Zombie z){
-        int zPosition = z.getPsX();
-        return ((zPosition > this.positionX) ^ (zPosition < this.positionX));
-    }
-    public boolean checkZColisionY(Zombie z){
-        int zPosition = z.getPsY();
-        return ((zPosition > this.positionY) ^ (zPosition < this.positionY));
-    }
+    // public boolean checkZColisionX(Zombie z){
+    //     int zPosition = z.getPsX();
+    //     return ((zPosition > this.positionX) ^ (zPosition < this.positionX));
+    // }
+    // public boolean checkZColisionY(Zombie z){
+    //     int zPosition = z.getPsY();
+    //     return ((zPosition > this.positionY) ^ (zPosition < this.positionY));
+    // }
     //Metodos especiais para o objeto item
     public Item getItem() {
         return item;
@@ -128,7 +124,7 @@ public class Zombie extends Entity implements ActionListener {
         this.item = i;
     }
     /* MUDAR ISSO */
-    public void setPlayer(Player p) {
-        this.p = p;
-    }
+    // public void setPlayer(Player p) {
+    //     this.p = p;
+    // }
 }

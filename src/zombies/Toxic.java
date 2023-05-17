@@ -13,17 +13,23 @@ public class Toxic extends Zombie{
 
     @Override
     public void attack(Player p){
-        liberateArea();
-        // if (liberated) {
-        //     area.hit(p);
-        // }
-        System.out.println("liberou");
+        if (!liberated) {
+            liberateArea();
+            System.out.println("liberou");
+        } else {
+            area.hit(p);
+        }
     }
     /* Métodos para a área tóxica */
     public void liberateArea(){
         this.area = new ToxicArea(getPsX(), getPsY());
-        setImg("");
         stop();
         this.liberated = true;
+    }
+    public ToxicArea getArea() {
+        return area;
+    }
+    public boolean liberated() {
+        return liberated;
     }
 }

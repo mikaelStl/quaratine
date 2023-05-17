@@ -12,6 +12,7 @@ public abstract class Entity {
     protected Rectangle lifeBar;
     protected int life_max;
     protected boolean dead;
+    protected int velocity;
     protected int positionX;
     protected int positionY;
         
@@ -75,8 +76,10 @@ public abstract class Entity {
         return lifeValue;
     }
     //Getter e Setter para dead
-    public void setDead() {
+    public void Dead(){
         this.dead = true;
+        this.velocity = 0;
+        this.box = null;
     }
     public boolean isDead() {
         return dead;

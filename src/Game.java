@@ -20,7 +20,7 @@ public class Game extends JPanel implements ActionListener{
     private Image dead;
     private Player player;
     private Timer timer;
-    private List<Zombie> zombies;
+    private List<Zombie> enemies;
     private List<Item> items;
     private List<Shot> shots;
     private Spawn spawn;
@@ -34,17 +34,17 @@ public class Game extends JPanel implements ActionListener{
 
         player = new Player();
 
-        zombies = new ArrayList<Zombie>();
+        enemies = new ArrayList<Zombie>();
         items = new ArrayList<Item>();
         shots = player.getWeapon().getShots();
         
         spawn = new Spawn();
-        spawn.spawnZombie(zombies);
-        spawn.generateItem(zombies);
+        spawn.spawnZombie(enemies);
+        spawn.generateItem(enemies);
 
         addKeyListener(new Keyboard());
 
-        timer = new Timer(15, this);
+        timer = new Timer(20, this);
         timer.start();
     }
     //Método para imprimir objetos na tela
@@ -53,26 +53,30 @@ public class Game extends JPanel implements ActionListener{
         graphics.drawImage(background, 0, 0, null);
 
         if (player.isDead() == false) {
-            //Desenhando Player
-            graphics.drawImage(player.getImg(), player.getX(), player.getY(), this);
-            graphics.setColor(new Color(225, 0, 0));
-                graphics.fill(player.getLifeBar());
-                graphics.draw(player.getLifeBar());
-            
             //Desenhando itens
             for (Item item : items) {
                 if (item != null) {
                     graphics.drawImage(item.getItemImg(), item.getX(), item.getY(), this);
                 }
             }
-
             //Desenhando Zumbis
-            for (Zombie z : zombies) {
+            for (Zombie z : enemies) {
                 graphics.drawImage(z.getImg(), z.getX(), z.getY(), this);
                     graphics.setColor(new Color(225, 0, 0));
                         graphics.fill(z.getLifeBar());
                         graphics.draw(z.getLifeBar());
+                if (z instanceof Toxic) {
+                    Toxic t = (Toxic) z;
+                    if (t.liberated()) {
+                        graphics.drawImage(t.getArea().getAcidImg(), t.getPsX(), t.getPsY(), this);
+                    }
+                }
             }
+            //Desenhando Player
+            graphics.drawImage(player.getImg(), player.getX(), player.getY(), this);
+            graphics.setColor(new Color(225, 0, 0));
+                graphics.fill(player.getLifeBar());
+                graphics.draw(player.getLifeBar());
 
             //Desenhando Tiros
             for (Shot s : shots) {
@@ -102,20 +106,15 @@ public class Game extends JPanel implements ActionListener{
             }
         }
 
-        while (cont != zombies.size()) {
-            Zombie z = zombies.get(cont);
-            Zombie tempZ = zombies.get(aux);
+        while (cont != enemies.size()) {
+            Zombie z = enemies.get(cont);
+            Zombie tempZ = enemies.get(aux);
             z.setLifeBar(z.getW(), z.getLife());
             if (z.isDead() == false) {
                 if (!touch(player.getBounds(), z.getBounds())) {
-                    // z.walkX(player, tempZ);
-                    // z.walkY(player, tempZ);
                     z.walkX(player);
                     z.walkY(player);
-                } else if (z.getBounds().intersects(tempZ.getBounds())) {
-                    z.stop();
                 }
-                z.setPlayer(player);
             }
             aux = cont;
             cont++;
@@ -126,37 +125,44 @@ public class Game extends JPanel implements ActionListener{
     }
     //Metódo para checar colisão
     public void checkColision(){
-        Rectangle playerBox = player.getBounds();
-        Rectangle zombieBox;
         Rectangle shotBox;
-        Rectangle itemBox;
+        // Rectangle itemBox;
 
-        // for (int z = 0; z < zombies.size(); z++) {
-        //     Zombie zombie = zombies.get(z);
-        //     zombieBox = zombie.getBounds();
-        //     if (zombieBox.intersects(playerBox)){
-        //         zombie.attack(player);
+        for (int z = 0; z < enemies.size(); z++) {
+            Zombie zombie = enemies.get(z);
+            if (zombie.getBounds().intersects(player.getBounds())){
+                zombie.attack(player);
+            }
+        }
+
+        // for (Shot s : shots) {
+        //     for (Zombie z : enemies) {
+        //         if (z.isDead()) {
+        //             this.enemies.remove(z);
+        //         } else if (s.getBounds().intersects(z.getBounds())) {
+        //             s.hitZombie(z);
+        //             shots.remove(s);
+        //             if (z.getLife() <= 0 && z.getItem() != null) {
+        //                 items.add(spawn.spawnItem(z));
+        //             }
+        //         }
         //     }
         // }
 
         for (int m = 0; m < shots.size(); m++) {
             Shot shot = shots.get(m);
             shotBox = shot.getBounds();
-            for (int s = 0; s < zombies.size(); s++) {
-                Zombie zombie = zombies.get(s);
-                if (zombie.isDead() == false) {
-                    zombieBox = zombie.getBounds();
-                    if (shotBox.intersects(zombieBox)) {
-                        shot.hitZombie(zombie);
-                        if (zombie.getLife() <= 0) {
-                            if (zombie.getItem() != null) {
-                                items.add(spawn.spawnItem(zombie));
-                            }
-                            zombies.remove(s);
-                            zombieBox = null;
+            for (int s = 0; s < enemies.size(); s++) {
+                Zombie zombie = enemies.get(s);
+                if (shotBox.intersects(zombie.getBounds())) {
+                    shot.hitZombie(zombie);
+                    if (zombie.getLife() <= 0) {
+                        if (zombie.getItem() != null) {
+                            items.add(spawn.spawnItem(zombie));
                         }
-                        shots.remove(m);
+                        enemies.remove(zombie);
                     }
+                    shots.remove(shot);
                 }
             }
         }
@@ -164,8 +170,8 @@ public class Game extends JPanel implements ActionListener{
         for (int f = 0; f < items.size(); f++) {
             Item item = items.get(f);
             if (item != null) {
-                itemBox = item.getBounds();
-                if (touch(playerBox, itemBox)) {
+                item.getBounds();
+                if (touch(player.getBounds(), item.getBounds())) {
                     player.addItem(item);
                     items.remove(f);
                 }

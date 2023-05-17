@@ -112,7 +112,7 @@ public class Player extends Entity implements ActionListener{
         this.lifeValue -= damage;
         setLifeBar(getBarWidth(), this.lifeValue);
         if (lifeValue <= 0) {
-            setDead();
+            Dead();
         }
     }
     //Retorna o objeto

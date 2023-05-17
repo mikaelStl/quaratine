@@ -28,17 +28,11 @@ public class Spawn {
         }
     }
 
-    // public void spawnToxicArea(List<ToxicArea> toxic){
-    //     for (int g = 0; g < toxic.size(); g++){
-    //         toxic.add();
-    //     }
-    // }
-
     public void spawnZombie(List<Zombie> enemies){
         int quant = 1;
 
         for (int i = 0; i < quant; i++) {
-            enemies.add(new Toxic(generateX(), generateY()));
+            enemies.add(new Zombie(generateX(), generateY()));
         }
     }
 

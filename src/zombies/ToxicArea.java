@@ -1,5 +1,5 @@
 import java.awt.Image;
-import java.awt.Rectangle;
+import java.awt.geom.Ellipse2D;
 
 import javax.swing.ImageIcon;
 
@@ -34,8 +34,9 @@ public class ToxicArea{
         return acidImg.getWidth(null);
     }
     //Definindo colisor
-    public Rectangle getBounds(){
-        return new Rectangle(x, y, getImgWidth(), getImgHeight());
+    public Ellipse2D getBounds(){
+        return new Ellipse2D.Double(x, y, getImgWidth(), getImgHeight());
+        // return new Rectangle(x, y, getImgWidth(), getImgHeight());
     }
     //Getter para posição
     public int getX() {
