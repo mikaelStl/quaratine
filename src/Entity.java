@@ -8,6 +8,7 @@ public abstract class Entity {
     protected Rectangle box;
     protected int x, y;
     protected int h, w;
+    protected int dx, dy;
     protected int lifeValue;
     protected Rectangle lifeBar;
     protected int life_max;
@@ -17,6 +18,12 @@ public abstract class Entity {
     protected int positionY;
         
     public abstract void takeDamage(int damage);
+    // Método para saber se o objeto tocou outro
+    public static boolean touch(Entity ent1, Entity ent2){
+        Rectangle ent1B = ent1.getBounds();
+        Rectangle ent2B = ent2.getBounds();
+        return ent1B.intersects(ent2B);
+    }
     //Getter e Setter bara barra de vida
     public void setLifeBar(int width/*Tamanho atual da barra*/, int newLife/*vida após modificação*/) {
         int tamBar = (width * newLife)/life_max;
@@ -67,6 +74,12 @@ public abstract class Entity {
     }
     public int getPsY() {
         return positionY;
+    }
+    public int getDx() {
+        return dx;
+    }
+    public int getDy() {
+        return dy;
     }
     //Getter e setter para vida
     public void setLife(int life) {

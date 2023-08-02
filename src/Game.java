@@ -23,7 +23,6 @@ public class Game extends JPanel implements ActionListener{
     private List<Zombie> enemies;
     private List<Item> items;
     private List<Shot> shots;
-    private Spawn spawn;
 
     public Game(){
         setFocusable(true);
@@ -37,10 +36,9 @@ public class Game extends JPanel implements ActionListener{
         enemies = new ArrayList<Zombie>();
         items = new ArrayList<Item>();
         shots = player.getWeapon().getShots();
-        
-        spawn = new Spawn();
-        spawn.spawnZombie(enemies);
-        spawn.generateItem(enemies);
+    
+        Spawn.spawnZombie(enemies);
+        Spawn.generateItem(enemies);
 
         addKeyListener(new Keyboard());
 
@@ -56,7 +54,7 @@ public class Game extends JPanel implements ActionListener{
             //Desenhando itens
             for (Item item : items) {
                 if (item != null) {
-                    graphics.drawImage(item.getItemImg(), item.getX(), item.getY(), this);
+                    graphics.drawImage(item.getImg(), item.getX(), item.getY(), this);
                 }
             }
             //Desenhando Zumbis
@@ -65,6 +63,9 @@ public class Game extends JPanel implements ActionListener{
                     graphics.setColor(new Color(225, 0, 0));
                         graphics.fill(z.getLifeBar());
                         graphics.draw(z.getLifeBar());
+                    graphics.setColor(new Color(0, 0, 0));
+                        graphics.fillRect(z.getX(), z.getY(), 2, 2);
+                        graphics.fillRect(z.getDx(), z.getDy(), 2, 2);
                 if (z instanceof Toxic) {
                     Toxic t = (Toxic) z;
                     if (t.liberated()) {
@@ -77,6 +78,8 @@ public class Game extends JPanel implements ActionListener{
             graphics.setColor(new Color(225, 0, 0));
                 graphics.fill(player.getLifeBar());
                 graphics.draw(player.getLifeBar());
+            graphics.setColor(new Color(0, 0, 0));
+                graphics.draw(player.getBounds());
 
             //Desenhando Tiros
             for (Shot s : shots) {
@@ -92,8 +95,7 @@ public class Game extends JPanel implements ActionListener{
     //Método para atualizar o jogo em tempo real
     @Override
     public void actionPerformed(ActionEvent e){
-        int cont = 0;
-        int aux = 0;
+        int cont = 1;
 
         player.move();
         player.setLifeBar(player.getW(), player.getLife());
@@ -106,48 +108,50 @@ public class Game extends JPanel implements ActionListener{
             }
         }
 
-        while (cont != enemies.size()) {
-            Zombie z = enemies.get(cont);
-            Zombie tempZ = enemies.get(aux);
-            z.setLifeBar(z.getW(), z.getLife());
-            if (z.isDead() == false) {
-                if (!touch(player.getBounds(), z.getBounds())) {
-                    z.walkX(player);
-                    z.walkY(player);
+        for (Zombie z : enemies) {
+            if (!z.isDead()) {
+                if (!Entity.touch(z, player)) {
+                    z.setLifeBar(z.getW(), z.getLife());
+
+                    while (cont < enemies.size()) {
+                        Zombie zombie = enemies.get(cont);
+                        if (Entity.touch(zombie, z) && zombie instanceof Zombie) {
+                            zombie.walk(zombie, player);
+                        }
+                        cont++;
+                    }
                 }
             }
-            aux = cont;
-            cont++;
         }
+
+        // while (cont != enemies.size()) {
+        //     Zombie z = enemies.get(cont);
+        //     Zombie tempZ = enemies.get(aux);
+        //     z.setLifeBar(z.getW(), z.getLife());
+        //     if (z.isDead() == false) {
+        //         if (!Entity.touch(player, z)) {
+        //             touchIn(player, z);
+        //             z.walk(player);
+        //             z.walkZ(tempZ);
+        //             // z.walkY(player);
+        //             // z.attack(player);
+        //         } else if (Entity.touch(z, tempZ)){
+        //             touchIn(z, tempZ);
+        //         }
+        //     }
+        //     aux = cont;
+        //     cont++;
+        // }
 
         checkColision();
         repaint();
     }
+    // Colisor entre zumbis
+    
     //Metódo para checar colisão
     public void checkColision(){
         Rectangle shotBox;
         // Rectangle itemBox;
-
-        for (int z = 0; z < enemies.size(); z++) {
-            Zombie zombie = enemies.get(z);
-            if (zombie.getBounds().intersects(player.getBounds())){
-                zombie.attack(player);
-            }
-        }
-
-        // for (Shot s : shots) {
-        //     for (Zombie z : enemies) {
-        //         if (z.isDead()) {
-        //             this.enemies.remove(z);
-        //         } else if (s.getBounds().intersects(z.getBounds())) {
-        //             s.hitZombie(z);
-        //             shots.remove(s);
-        //             if (z.getLife() <= 0 && z.getItem() != null) {
-        //                 items.add(spawn.spawnItem(z));
-        //             }
-        //         }
-        //     }
-        // }
 
         for (int m = 0; m < shots.size(); m++) {
             Shot shot = shots.get(m);
@@ -158,7 +162,7 @@ public class Game extends JPanel implements ActionListener{
                     shot.hitZombie(zombie);
                     if (zombie.getLife() <= 0) {
                         if (zombie.getItem() != null) {
-                            items.add(spawn.spawnItem(zombie));
+                            items.add(Spawn.spawnItem(zombie));
                         }
                         enemies.remove(zombie);
                     }
@@ -171,15 +175,12 @@ public class Game extends JPanel implements ActionListener{
             Item item = items.get(f);
             if (item != null) {
                 item.getBounds();
-                if (touch(player.getBounds(), item.getBounds())) {
+                if (Entity.touch(player, item)) {
                     player.addItem(item);
                     items.remove(f);
                 }
             }
         }
-    }
-    public boolean touch(Rectangle objBounds1, Rectangle objBounds2){
-        return objBounds2.intersects(objBounds1);
     }
     //Classe para receber as teclas do teclado
     public class Keyboard extends KeyAdapter{

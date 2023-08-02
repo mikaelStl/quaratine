@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class Spawn {
-    public void generateItem(List<Zombie> enemies){
+    public static void generateItem(List<Zombie> enemies){
         int quant = 8;
 
         for (int j = 0; j < quant; j++) {
@@ -17,7 +17,7 @@ public class Spawn {
         }
     }
 
-    public Item spawnItem(Zombie z){
+    public static Item spawnItem(Zombie z){
         if (z.getItem() != null) {
             Item i = z.getItem();
             i.setX(z.getX() + (z.getW()/2));
@@ -28,15 +28,15 @@ public class Spawn {
         }
     }
 
-    public void spawnZombie(List<Zombie> enemies){
-        int quant = 1;
+    public static void spawnZombie(List<Zombie> enemies){
+        int quant = 12;
 
         for (int i = 0; i < quant; i++) {
             enemies.add(new Zombie(generateX(), generateY()));
         }
     }
 
-    public int generateY(){
+    public static int generateY(){
         float interval = (float) (Math.random() * 1);
         int y = 0;
         if (interval < 0.5) {
@@ -46,7 +46,7 @@ public class Spawn {
         }
         return y;
     }
-    public int generateX(){
+    public static int generateX(){
         int x = (int) (Math.random() * 3000 + (-2000));
         return x;
     }

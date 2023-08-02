@@ -3,30 +3,19 @@ import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 
-public abstract class Item {
-    private Image itemImg;
-    private int x, y;
-    private int h, w;
+public abstract class Item extends Entity {
     protected int value;
     
     public Item(String url){
         setImg(url);
-        this.h = getItemImg().getHeight(null);
-        this.w = getItemImg().getWidth(null);
+        this.h = getImg().getHeight(null);
+        this.w = getImg().getWidth(null);
     }
     //funcionalidade do item
     public abstract void function(Player p);
     //Definindo colisor
     public Rectangle getBounds(){
         return new Rectangle(x, y, w, h);
-    }
-    //Getter e Setter para imagem
-    public void setImg(String url){
-        ImageIcon ref = new ImageIcon(getClass().getResource(url));
-        this.itemImg = ref.getImage();
-    }
-    public Image getItemImg(){
-        return itemImg;
     }
     //Getter e Setter para posição
     public int getX() {
