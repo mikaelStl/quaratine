@@ -20,38 +20,43 @@ canvas.height = 640;
 const back = new Image();
 back.src = './img/background.png';
 
-const ent = new Entity('./img/idle.png', frames = {max: 4, current: 0, elapsed: 0});
+const player = new Player('./img/idle.png', frames = {max: 4, current: 0, elapsed: 0});
+const zombie = new Zombie(400, 320-(player.size.height/2),'./img/z-model.png',frames = {max: 1, current: 0, elapsed: 0});
+
+const img = new Image();
+img.src = './img/idle.png';
 
 function start() {
     window.requestAnimationFrame(start);
 
     c.drawImage(back, 0, 0);
-    ent.draw(c);
+    player.draw(c);
+    zombie.draw(c);
 }
 start();
 
 window.addEventListener('keydown', (evt)=>{
     switch (evt.keyCode) {
-        case keys.up: ent.move(evt);
+        case keys.up: player.move(evt);
             break;
-        case keys.down: ent.move(evt);
+        case keys.down: player.move(evt);
             break;
-        case keys.right: ent.move(evt);
+        case keys.right: player.move(evt);
             break;
-        case keys.left: ent.move(evt);
+        case keys.left: player.move(evt);
             break;
     }
 });
 
 window.addEventListener('keyup', (evt)=>{
     switch (evt.keyCode) {
-        case keys.up: ent.stop();
+        case keys.up: player.stop();
             break;
-        case keys.down: ent.stop();
+        case keys.down: player.stop();
             break;
-        case keys.right: ent.stop();
+        case keys.right: player.stop();
             break;
-        case keys.left: ent.stop();
+        case keys.left: player.stop();
             break;
     }
 });

@@ -1,5 +1,3 @@
-// 
-
 class HitBox{
     constructor(position = {}, size = {}){
         this.position = {...position};

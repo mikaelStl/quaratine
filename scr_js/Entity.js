@@ -1,7 +1,7 @@
 // h = Number(), w = Number(), x = Number(), y = Number(),
 
 class Entity{
-    constructor (path = String(), frames = {max: 1, current: 0, elapsed: 0}){
+    constructor(path = String(), frames = {max: 1, current: 0, elapsed: 0}){
         this.img;
         this.setImg(path);
         this.frames = {...frames, hold: fps};
@@ -10,8 +10,8 @@ class Entity{
             width: this.img.width/this.frames.max
         }
         this.position = {
-            x: 320-(this.size.width/2),
-            y: 320-(this.size.height/2)
+            x: 0,
+            y: 0
         }
         this.velocity;
         this.moving = false;
@@ -58,29 +58,10 @@ class Entity{
         );
         this.hitbox.draw(screen);
         this.animate();
-        c.fillStyle = 'black';
+        screen.fillStyle = 'black';
         screen.fill();
-        c.fillStyle = 'red';
+        screen.fillStyle = 'red';
         screen.fill();
-    }
-
-    move(key){
-        this.moving = true;
-        this.velocity = 4;
-        switch (key.keyCode) {
-            case keys.up: this.position.y -= this.velocity;
-                break;
-            case keys.down: this.position.y += this.velocity;
-                break;
-            case keys.right: this.position.x += this.velocity;
-                break;
-            case keys.left: this.position.x -= this.velocity;
-                break;
-        }
-    }
-
-    stop(){
-        this.moving = false;
     }
 
     static touch(ent1 = Entity(), ent2 = Entity()){
@@ -90,7 +71,6 @@ class Entity{
     }
 
     takeDamage(damage){
-        damage = Number(damage);
         //todo
     }
 
@@ -110,3 +90,5 @@ class Entity{
         return this.img;
     }
 }
+
+// export default Entity;
