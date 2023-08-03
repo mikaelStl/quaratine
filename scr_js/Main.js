@@ -1,5 +1,6 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
+const fps = 24;
 
 const keys = {
     up: 38,
@@ -20,11 +21,11 @@ const back = new Image();
 back.src = './img/background.png';
 
 // const ent = new Entity('./img/walk.png', frames = {max: 7, current: 0, elapsed: 0});
-const ent = new Entity('./img/idle.png', frames = {max: 7, current: 0, elapsed: 0});
+const ent = new Entity('./img/idle.png', frames = {max: 6, current: 0, elapsed: 0});
 
 function start() {
     window.requestAnimationFrame(start);
-    
+
     c.drawImage(back, 0, 0);
     ent.draw(c);
 }
@@ -55,5 +56,3 @@ window.addEventListener('keyup', (evt)=>{
             break;
     }
 });
-
-console.log(ent.size);

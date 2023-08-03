@@ -4,10 +4,10 @@ class Entity{
     constructor (path = String(), frames = {max: 1, current: 0, elapsed: 0}){
         this.img;
         this.setImg(path);
-        this.frames = {...frames, hold: 12};
+        this.frames = {...frames, hold: fps};
         this.size = {
             height: this.img.height,
-            width: this.img.width/this.frames.max
+            width: this.img.width
         }
         this.position = {
             x: 320-(this.size.width/2),
@@ -38,15 +38,15 @@ class Entity{
         screen.drawImage(
             this.img,
             //image crop
-            this.frames.current * this.size.width,
+            this.frames.current * this.size.width/this.frames.max,
             0,
             this.size.width/this.frames.max,
             this.size.height,
             //original image
             this.position.x,
             this.position.y,
-            this.size.width/2,
-            this.size.height,
+            this.size.width/this.frames.max,
+            this.size.height
         );
         this.animate();
     }
