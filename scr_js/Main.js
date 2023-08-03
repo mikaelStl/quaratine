@@ -20,8 +20,12 @@ canvas.height = 640;
 const back = new Image();
 back.src = './img/background.png';
 
+const spawn = new Spawn();
+const zombies = [];
+Spawn.spawnZombie(zombies);
+// console.log(zombies);
+
 const player = new Player('./img/idle.png', frames = {max: 4, current: 0, elapsed: 0});
-const zombie = new Zombie(400, 320-(player.size.height/2),'./img/z-model.png',frames = {max: 1, current: 0, elapsed: 0});
 
 const img = new Image();
 img.src = './img/idle.png';
@@ -31,7 +35,12 @@ function start() {
 
     c.drawImage(back, 0, 0);
     player.draw(c);
-    zombie.draw(c);
+
+    for (const zombie of zombies) {
+        zombie.draw(c);
+        zombie.walkX(player);
+        zombie.walkY(player);
+    }
 }
 start();
 
