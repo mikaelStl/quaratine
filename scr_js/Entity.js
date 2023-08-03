@@ -15,11 +15,18 @@ class Entity{
         }
         this.velocity;
         this.moving = false;
-        this.hitbox = new HitBox(this.position.x, this.position.y,this.size.width, this.size.height);
-        // this.lifeValue;
-        // this.lifeBar;
-        // this.lifeMax;
-        // this.dead;
+        this.hitbox = new HitBox(this.position, this.size);
+        this.life = {
+            bar: this.size.width,
+            value: 100,
+            max: 100
+        };
+        this.dead;
+    }
+
+    update(){
+        this.hitbox.update(this.position);
+        this.setLifeBar(this.life.bar, this.life.value);
     }
 
     animate(){
@@ -35,6 +42,7 @@ class Entity{
     }
 
     draw(screen){
+        this.update();
         screen.drawImage(
             this.img,
             //image crop
@@ -50,6 +58,10 @@ class Entity{
         );
         this.hitbox.draw(screen);
         this.animate();
+        c.fillStyle = 'black';
+        screen.fill();
+        c.fillStyle = 'red';
+        screen.fill();
     }
 
     move(key){
@@ -65,15 +77,28 @@ class Entity{
             case keys.left: this.position.x -= this.velocity;
                 break;
         }
-        this.hitbox.update(this.position);
     }
 
     stop(){
         this.moving = false;
     }
 
+    static touch(ent1 = Entity(), ent2 = Entity()){
+        const ent1B = ent1.hitbox;
+        const ent2B = ent2.hitbox;
+        return ent1B.intersects(ent2B);
+    }
+
     takeDamage(damage){
         damage = Number(damage);
+        //todo
+    }
+
+    setLifeBar(width = Number(), newValue = Number()){
+        const tamBar = (width * newValue)/this.life.max;
+        this.life.bar = tamBar;
+        c.beginPath();
+        c.rect(this.position.x, this.position.y-8, tamBar, 3);
     }
 
     setImg(path){

@@ -1,15 +1,9 @@
 // 
 
 class HitBox{
-    constructor(x = Number(), y = Number(),w = Number(), h = Number()){
-        this.position = {
-            x: Number(x),
-            y: Number(y)
-        }
-        this.size = {
-            height: Number(h),
-            width: Number(w)
-        }
+    constructor(position = {}, size = {}){
+        this.position = {...position};
+        this.size = {...size};
     }
 
     update(position){

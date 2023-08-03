@@ -25,7 +25,6 @@ const ent = new Entity('./img/idle.png', frames = {max: 4, current: 0, elapsed: 
 function start() {
     window.requestAnimationFrame(start);
 
-
     c.drawImage(back, 0, 0);
     ent.draw(c);
 }
