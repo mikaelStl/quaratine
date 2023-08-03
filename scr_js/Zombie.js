@@ -27,6 +27,10 @@ class Zombie extends Entity{
         } else if (playerPosition == this.position.x){
             this.position.y += 0;
         }
+
+        if (this.hitbox.intersects(p.hitbox)) {
+            this.velocity += 0;
+        }
     }
     walkY(p = Player()){
         const playerPosition = p.position.y;
@@ -37,6 +41,10 @@ class Zombie extends Entity{
             this.position.y -= this.velocity;
         } else if (playerPosition == this.position.y){
             this.position.x += 0;
+        }
+
+        if (this.hitbox.intersects(p.hitbox)) {
+            this.velocity = 0;
         }
     }
     // Método para baixar vida
