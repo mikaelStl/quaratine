@@ -11,21 +11,21 @@ const keys = {
 canvas.width = 640;
 canvas.height = 640;
 
-const scaledCanvas = {
-    width: canvas.width / 4,
-    height: canvas.height / 4,
-}
+// const scaledCanvas = {
+//     width: canvas.width / 4,
+//     height: canvas.height / 4,
+// }
+
 const back = new Image();
 back.src = './img/background.png';
 
-const ent = new Entity(0, 0, './img/modelL.png');
+// const ent = new Entity('./img/walk.png', frames = {max: 7, current: 0, elapsed: 0});
+const ent = new Entity('./img/idle.png', frames = {max: 7, current: 0, elapsed: 0});
 
 function start() {
     window.requestAnimationFrame(start);
-
-    back.onload = () => {
-        c.drawImage(back, 0, 0);
-    };
+    
+    c.drawImage(back, 0, 0);
     ent.draw(c);
 }
 start();
@@ -55,3 +55,5 @@ window.addEventListener('keyup', (evt)=>{
             break;
     }
 });
+
+console.log(ent.size);

@@ -1,32 +1,54 @@
-// h = Number(), w = Number()
+// h = Number(), w = Number(), x = Number(), y = Number(),
 
 class Entity{
-    constructor (x = Number(), y = Number(), path = String()){
+    constructor (path = String(), frames = {max: 1, current: 0, elapsed: 0}){
         this.img;
         this.setImg(path);
-        // this.box;
-        this.position = {
-            x: Number(x),
-            y: Number(y)
-        }
+        this.frames = {...frames, hold: 12};
         this.size = {
             height: this.img.height,
-            width: this.img.width
+            width: this.img.width/this.frames.max
+        }
+        this.position = {
+            x: 320-(this.size.width/2),
+            y: 320-(this.size.height/2)
         }
         this.velocity;
-        this. moving = false;
+        this.moving = false;
+        // this.hitbox;
         // this.lifeValue;
         // this.lifeBar;
         // this.lifeMax;
         // this.dead;
     }
 
+    animate(){
+        this.frames.elapsed++;
+
+        if (this.frames.elapsed % this.frames.hold === 0) {
+            if (this.frames.current < (this.frames.max - 1)) {
+                this.frames.current++;
+            } else {
+                this.frames.current = 0;
+            }
+        }
+    }
+
     draw(screen){
-        this.img.onload = () => {
-            screen.drawImage(this.img, this.position.x, this.position.y);
-        };
-        // screen.fillStyle = 'red';
-        // screen.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
+        screen.drawImage(
+            this.img,
+            //image crop
+            this.frames.current * this.size.width,
+            0,
+            this.size.width/this.frames.max,
+            this.size.height,
+            //original image
+            this.position.x,
+            this.position.y,
+            this.size.width/2,
+            this.size.height,
+        );
+        this.animate();
     }
 
     move(key){
