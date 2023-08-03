@@ -7,7 +7,7 @@ class Entity{
         this.frames = {...frames, hold: fps};
         this.size = {
             height: this.img.height,
-            width: this.img.width
+            width: this.img.width/this.frames.max
         }
         this.position = {
             x: 320-(this.size.width/2),
@@ -15,7 +15,7 @@ class Entity{
         }
         this.velocity;
         this.moving = false;
-        // this.hitbox;
+        this.hitbox = new HitBox(this.position.x, this.position.y,this.size.width, this.size.height);
         // this.lifeValue;
         // this.lifeBar;
         // this.lifeMax;
@@ -38,16 +38,17 @@ class Entity{
         screen.drawImage(
             this.img,
             //image crop
-            this.frames.current * this.size.width/this.frames.max,
+            this.frames.current * this.size.width,
             0,
-            this.size.width/this.frames.max,
+            this.size.width,
             this.size.height,
             //original image
             this.position.x,
             this.position.y,
-            this.size.width/this.frames.max,
+            this.size.width,
             this.size.height
         );
+        this.hitbox.draw(screen);
         this.animate();
     }
 
@@ -64,6 +65,7 @@ class Entity{
             case keys.left: this.position.x -= this.velocity;
                 break;
         }
+        this.hitbox.update(this.position);
     }
 
     stop(){
