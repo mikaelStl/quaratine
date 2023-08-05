@@ -1,10 +1,15 @@
-// import Entity from './Entity.js';
+// import Entity from './Entity';
 
 class Player extends Entity{
-    //Construtor
-    constructor(path = String(), frames = {max: 1, current: 0, elapsed: 0}){
-        super(path, frames)
-
+    /**
+     * 
+     * @param {object} animations - Objeto que deve conter todas as animações do objeto 
+     * @param {string} standart - animação padrão do objeto
+     */
+    constructor(animations, standart){
+        super(animations, standart);
+        this.setImg(standart);
+        // this.size()
         this.position = {
             x: Math.round(320-(this.size.width/2)),
             y: Math.round(320-(this.size.height/2))
@@ -17,12 +22,14 @@ class Player extends Entity{
     move(key){
         this.moving = true;
         this.velocity = 4;
-        switch (key.keyCode) {
+        switch (key) {
             case keys.up: this.position.y -= this.velocity;
                 break;
             case keys.down: this.position.y += this.velocity;
+                            // this.invert();
                 break;
             case keys.right: this.position.x += this.velocity;
+                            //  this.invert();
                 break;
             case keys.left: this.position.x -= this.velocity;
                 break;

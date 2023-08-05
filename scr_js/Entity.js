@@ -1,14 +1,14 @@
 // h = Number(), w = Number(), x = Number(), y = Number(),
 
 class Entity{
-    constructor(path = String(), frames = {max: 1, current: 0, elapsed: 0}){
+    constructor(animations = {standart: null}){
+        this.animations = {...animations};
         this.img;
-        this.setImg(path);
-        this.frames = {...frames, hold: fps};
+        this.setImg('standart');
         this.size = {
-            height: this.img.height,
-            width: this.img.width/this.frames.max
-        }
+            width: this.img.width/this.animations.standart.frames,
+            height: this.img.height
+        };
         this.position = {
             x: 0,
             y: 0
@@ -29,24 +29,14 @@ class Entity{
         this.setLifeBar(this.life.bar, this.life.value);
     }
 
-    animate(){
-        this.frames.elapsed++;
+    draw(screen, path){
+        if (!this.img) return;
 
-        if (this.frames.elapsed % this.frames.hold === 0) {
-            if (this.frames.current < (this.frames.max - 1)) {
-                this.frames.current++;
-            } else {
-                this.frames.current = 0;
-            }
-        }
-    }
-
-    draw(screen){
         this.update();
         screen.drawImage(
             this.img,
             //image crop
-            this.frames.current * this.size.width,
+            this.animations[path].current * this.size.width,
             0,
             this.size.width,
             this.size.height,
@@ -57,11 +47,15 @@ class Entity{
             this.size.height
         );
         this.hitbox.draw(screen);
-        this.animate();
+        this.animations.idle.animate();
         screen.fillStyle = 'black';
         screen.fill();
         screen.fillStyle = 'red';
         screen.fill();
+    }
+
+    invert(){
+        //to-do
     }
 
     static touch(ent1 = Entity(), ent2 = Entity()){
@@ -71,7 +65,7 @@ class Entity{
     }
 
     takeDamage(damage){
-        //todo
+        //to-do
     }
 
     setLifeBar(width = Number(), newValue = Number()){
@@ -81,13 +75,12 @@ class Entity{
         c.rect(this.position.x, this.position.y-8, tamBar, 3);
     }
 
-    setImg(path){
+    /**
+     * @param {string} path
+     */
+    set setImg(path){
         this.img = new Image();
-        this.img.src = String(path);
-    }
-
-    getImg(){
-        return this.img;
+        this.img.src = this.animations[path].src;
     }
 }
 

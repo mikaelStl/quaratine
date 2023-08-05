@@ -1,12 +1,11 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
-const fps = 24;
 
 const keys = {
-    up: 87,
-    down: 83,
-    right: 68,
-    left: 65
+    up: 'w',
+    down: 's',
+    right: 'd',
+    left: 'a'
 }
 
 canvas.width = 640;
@@ -22,19 +21,23 @@ back.src = './img/background.png';
 
 const spawn = new Spawn();
 const zombies = [];
-Spawn.spawnZombie(zombies);
-// console.log(zombies);
+// Spawn.spawnZombie(zombies);
 
-const player = new Player('./img/idle.png', frames = {max: 4, current: 0, elapsed: 0});
-
-const img = new Image();
-img.src = './img/idle.png';
+const player = new Player({
+    standart: new Sprite('./img/idle.png', 2, 24),
+    walk: new Sprite('./img/walk.png', 8, 8)
+});
+console.log(player);
 
 function start() {
     window.requestAnimationFrame(start);
 
     c.drawImage(back, 0, 0);
-    player.draw(c);
+    player.draw(c, 'standart');
+
+    // if (player.moving) {
+    //     player.draw(c, 'walk');
+    // }
 
     for (const zombie of zombies) {
         zombie.draw(c);
@@ -42,23 +45,24 @@ function start() {
         zombie.walkY(player);
     }
 }
-start();
+// start();
 
+let lastKey = '';
 window.addEventListener('keydown', (evt)=>{
-    switch (evt.keyCode) {
-        case keys.up: player.move(evt);
+    switch (evt.key) {
+        case keys.up: player.move(evt.key);
             break;
-        case keys.down: player.move(evt);
+        case keys.down: player.move(evt.key);
             break;
-        case keys.right: player.move(evt);
+        case keys.right: player.move(evt.key);
             break;
-        case keys.left: player.move(evt);
+        case keys.left: player.move(evt.key);
             break;
     }
 });
 
 window.addEventListener('keyup', (evt)=>{
-    switch (evt.keyCode) {
+    switch (evt.key) {
         case keys.up: player.stop();
             break;
         case keys.down: player.stop();

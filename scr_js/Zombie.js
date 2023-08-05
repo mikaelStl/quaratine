@@ -1,3 +1,5 @@
+// import Entity from './Entity';
+
 class Zombie extends Entity{
     //Construtor
     constructor(x = Number(), y = Number(),path, frames = {max: 1, current: 0, elapsed: 0}){
