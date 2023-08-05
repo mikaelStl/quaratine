@@ -8,8 +8,6 @@ class Player extends Entity{
      */
     constructor(animations, standart){
         super(animations, standart);
-        this.setImg(standart);
-        // this.size()
         this.position = {
             x: Math.round(320-(this.size.width/2)),
             y: Math.round(320-(this.size.height/2))

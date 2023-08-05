@@ -24,19 +24,20 @@ const zombies = [];
 // Spawn.spawnZombie(zombies);
 
 const player = new Player({
-    standart: new Sprite('./img/idle.png', 2, 24),
+    standart: new Sprite('./img/idle.png', 2, 48),
     walk: new Sprite('./img/walk.png', 8, 8)
 });
-console.log(player);
+// console.log(player);
 
 function start() {
     window.requestAnimationFrame(start);
 
     c.drawImage(back, 0, 0);
-    player.draw(c, 'standart');
 
     // if (player.moving) {
-    //     player.draw(c, 'walk');
+        player.draw(c, 'walk');
+    // } else {
+    //     player.draw(c, 'standart');
     // }
 
     for (const zombie of zombies) {
@@ -45,7 +46,7 @@ function start() {
         zombie.walkY(player);
     }
 }
-// start();
+start();
 
 let lastKey = '';
 window.addEventListener('keydown', (evt)=>{
