@@ -36,19 +36,19 @@ class Spawn {
         } else if (interval > 0.5){
             y = Math.round(Math.random() * 800+640);
         }
-        return y;
+        return Math.round(y);
     }
 
     static generateX(){
         const x = Math.random() * 3000 + (-2000);
-        return x;
+        return Math.round(x);
     }
 
     static spawnZombie(enemies = []){
         const quant = 12;
 
         for (let i = 0; i < quant; i++) {
-            enemies.push(new Zombie(this.generateX(), this.generateY(),'./img/z-model.png',frames = {max: 1, current: 0, elapsed: 0}));
+            enemies.push(new Zombie(this.generateX(), this.generateY(), {standart: new Sprite('./img/z-model.png', 1, 1)}));
         }
     }
 }

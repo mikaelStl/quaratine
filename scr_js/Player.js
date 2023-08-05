@@ -6,8 +6,9 @@ class Player extends Entity{
      * @param {object} animations - Objeto que deve conter todas as animações do objeto 
      * @param {string} standart - animação padrão do objeto
      */
-    constructor(animations, standart){
-        super(animations, standart);
+    constructor(animations={}){
+        super(animations);
+        
         this.position = {
             x: Math.round(320-(this.size.width/2)),
             y: Math.round(320-(this.size.height/2))

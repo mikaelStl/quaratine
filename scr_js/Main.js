@@ -21,7 +21,7 @@ back.src = './img/background.png';
 
 const spawn = new Spawn();
 const zombies = [];
-// Spawn.spawnZombie(zombies);
+Spawn.spawnZombie(zombies);
 
 const player = new Player({
     standart: new Sprite('./img/idle.png', 2, 48),
@@ -31,17 +31,17 @@ const player = new Player({
 
 function start() {
     window.requestAnimationFrame(start);
-
+    
     c.drawImage(back, 0, 0);
 
-    // if (player.moving) {
+    if (player.moving) {
         player.draw(c, 'walk');
-    // } else {
-    //     player.draw(c, 'standart');
-    // }
+    } else {
+        player.draw(c, 'standart');
+    }
 
     for (const zombie of zombies) {
-        zombie.draw(c);
+        zombie.draw(c, 'standart');
         zombie.walkX(player);
         zombie.walkY(player);
     }

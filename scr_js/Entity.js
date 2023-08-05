@@ -4,11 +4,8 @@ class Entity{
     constructor(animations = {standart: null}){
         this.animations = animations;
         this.img;
+        this.size;
         this.setImg('standart');
-        this.size = {
-            width: Math.round(this.img.width/this.animations.standart.frames),
-            height: this.img.height
-        };
         this.position = {
             x: 0,
             y: 0
@@ -30,8 +27,9 @@ class Entity{
     }
 
     draw(screen, path){
-        this.setImg(path);
         if (!this.img) return;
+
+        this.setImg(path);
 
         this.update();
         screen.drawImage(
@@ -47,10 +45,8 @@ class Entity{
             this.size.width,
             this.size.height
         );
-        this.hitbox.draw(screen);
+        // this.hitbox.draw(screen);
         this.animations[path].animate();
-        screen.fillStyle = 'black';
-        screen.fill();
         screen.fillStyle = 'red';
         screen.fill();
     }
@@ -73,12 +69,17 @@ class Entity{
         const tamBar = (width * newValue)/this.life.max;
         this.life.bar = tamBar;
         c.beginPath();
-        c.rect(this.position.x, this.position.y-8, tamBar, 3);
+        c.rect(this.position.x, this.position.y-6, tamBar, 3);
     }
 
     setImg(path){
         this.img = new Image();
         this.img.src = this.animations[path].src;
+
+        this.size = {
+            width: Math.round(this.img.width/this.animations[path].frames),
+            height: this.img.height
+        };
     }
 }
 

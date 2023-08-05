@@ -2,8 +2,8 @@
 
 class Zombie extends Entity{
     //Construtor
-    constructor(x = Number(), y = Number(),path, frames = {max: 1, current: 0, elapsed: 0}){
-        super(path, frames)
+    constructor(x=Number(), y=Number(),animations={}){
+        super(animations);
         
         this.position = {
             x: x,
