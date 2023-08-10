@@ -1,15 +1,16 @@
 // h = Number(), w = Number(), x = Number(), y = Number(),
 
 class Entity{
+    /**
+     * 
+     * @param {object} animations - Objeto que deve conter todas as animações da Entidade
+     */
     constructor(animations = {standart: null}){
         this.animations = animations;
         this.img;
         this.size;
         this.setImg('standart');
-        this.position = {
-            x: 0,
-            y: 0
-        }
+        this.position;
         this.velocity;
         this.moving = false;
         this.hitbox = new HitBox(this.position, this.size);
