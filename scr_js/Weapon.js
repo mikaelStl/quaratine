@@ -1,12 +1,13 @@
 class Weapon extends Entity{
-    constructor(animations, px, py){
+    constructor(animations, pst = {}){
         super(animations);
 
-        this.position = {
-            x: px,
-            y: py
-        };
+        this.life.bar = 0;
 
+        this.position = {
+            x: pst.x,
+            y: pst.y
+        };
         this.mag = {
             standart: 30,
             total: 120
@@ -16,13 +17,13 @@ class Weapon extends Entity{
         this.totalAmmo = 90;
 
         this.shots = [];
-
-        this.life.bar = 0;
     }
 
-    update(pst = {x:0, y:0}){
-        this.position.x = pst.x;
-        this.position.y = pst.y;
+    move(pst = {}){
+        this.position = {
+            x: pst.x+10,
+            y: pst.y+10
+        };
     }
 
     //Método para atirar
@@ -34,7 +35,7 @@ class Weapon extends Entity{
     }
     //Método para recarregar
     reload(){
-        if (this.mag.total > 0) {
+        if (this.mag.total > 0 && this.mag.standart != 30) {
             this.mag.standart += 30;
             this.mag.total -= 30;
             console.log(this.mag.total);

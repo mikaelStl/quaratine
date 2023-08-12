@@ -10,7 +10,10 @@ class Entity{
         this.img;
         this.size;
         this.setImg('standart');
-        this.position;
+        this.position = {
+            x: 0,
+            y: 0
+        };
         this.velocity;
         this.moving = false;
         this.hitbox = new HitBox(this.position, this.size);

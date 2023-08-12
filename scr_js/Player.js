@@ -1,6 +1,11 @@
 // import Entity from './Entity';
 
 class Player extends Entity{
+    /**
+     * 
+     * @param {object} animations - Objeto que deve conter todas as animações do objeto 
+     * @param {string} standart - animação padrão do objeto
+     */
     constructor(animations={}){
         super(animations);
 
@@ -9,7 +14,10 @@ class Player extends Entity{
             y: Math.round(320-(this.size.height/2))
         };
 
-        this.weapon;
+        this.weapon = new Weapon(
+                        {standart: new Sprite('./img/weapon.png', 1, 0)},
+                        {x: this.position.x+10, y: this.position.y+10}
+                    );
 
         this.inventory = [];
         this.dead = false;
@@ -28,7 +36,7 @@ class Player extends Entity{
             case keys.left: this.position.x -= this.velocity;
                 break;
         }
-        // this.weapon.update({x: (this.position.x + 10), y: (this.position.y + 10)});
+        this.weapon.move(this.position);
     }
 
     stop(){

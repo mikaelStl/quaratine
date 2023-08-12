@@ -1,15 +1,15 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
-window.addEventListener('contextmenu', (evt)=>{
-    // evt.preventDefault();
-});
-
 const keys = {
     up: 'w',
     down: 's',
     right: 'd',
-    left: 'a'
+    left: 'a',
+
+    interact: 'f',
+    reload: 'r',
+    cure: 'q'
 }
 
 canvas.width = 640;
@@ -32,48 +32,6 @@ const player = new Player({
     walk: new Sprite('./img/walk.png', 8, 8)
 });
 
-let lastKey = '';
-window.addEventListener('keydown', (evt)=>{
-    switch (evt.key) {
-        case keys.up: player.move(evt.key);
-            break;
-        case keys.down: player.move(evt.key);
-            break;
-        case keys.right: player.move(evt.key);
-            break;
-        case keys.left: player.move(evt.key);
-            break;
-    }
-});
-
-window.addEventListener('keyup', (evt)=>{
-    switch (evt.key) {
-        case keys.up: player.stop();
-            break;
-        case keys.down: player.stop();
-            break;
-        case keys.right: player.stop();
-            break;
-        case keys.left: player.stop();
-            break;
-    }
-});
-
-//to-do
-let shooting = false;
-window.addEventListener('mousedown', (evt) =>{
-    switch (evt.buttons) {
-        case 1: shooting = true;
-            break;
-        case 2: //mirar
-            break;
-    }
-});
-window.addEventListener('mouseup', (evt)=>{
-    shooting = false;
-});
-const weapon = new Weapon({standart: new Sprite('./img/weapon.png', 1, 0)}, 308, 288);
-
 function start() {
     window.requestAnimationFrame(start);
     
@@ -86,7 +44,7 @@ function start() {
     }
 
     // if (!shooting) {
-        weapon.draw(c, 'standart');
+    //     weapon.draw(c, 'standart');
     // } else {
     //     weapon.draw(c, 'shooting');
     // }
@@ -96,7 +54,7 @@ function start() {
         zombie.walkX(player);
         zombie.walkY(player);
     }
+
+    player.weapon.draw(c, 'standart');
 }
 start();
-
-console.log(weapon);
