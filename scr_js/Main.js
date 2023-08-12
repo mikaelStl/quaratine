@@ -49,6 +49,11 @@ function start() {
     //     weapon.draw(c, 'shooting');
     // }
 
+    for (const shot of player.weapon.shots) {
+        shot.draw(c, 'standart');
+        shot.move();
+    }
+
     for (const zombie of zombies) {
         zombie.draw(c, 'standart');
         zombie.walkX(player);

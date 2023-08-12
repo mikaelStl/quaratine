@@ -33,6 +33,8 @@ window.addEventListener('keyup', (evt)=>{
 window.addEventListener('mousedown', (evt) =>{
     switch (evt.buttons) {
         case 1: shooting = true;
+                player.weapon.shoot();
+                console.log(player.weapon.shots);
             break;
         case 2: //mirar
             break;

@@ -27,9 +27,9 @@ class Weapon extends Entity{
     }
 
     //Método para atirar
-    shoot(p=Player()){
+    shoot(){
         if(this.mag.standart > 0){
-            this.shots.add(new Shot(((p.getX() + p.getW())), (p.getY()+13), damage, p.getDirection()));
+            this.shots.push(new Shot((this.position.x + this.size.width), (this.position.y+5), 1, {standart: new Sprite('./img/shot.png', 1, 0)}));
             this.mag.standart -= 1;
         }
     }

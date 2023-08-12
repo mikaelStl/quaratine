@@ -1,19 +1,26 @@
 class Shot extends Entity{
     constructor(x=Number(), y=Number(), direction=Number(),animations={}){
         super(animations);
+
+        this.life.bar = 0;
+
+        this.position = {
+            x: x,
+            y: y
+        };
         
         this.damage = 25;
         this.direction = direction;
 
-        const VELOCITY = 10;
+        this.VELOCITY = 10;
     }
     /*1: DIREITA*/
     /*0: ESQUERDA*/
-    shot(){
+    move(){
         if (this.direction === 1) {
-            this.x += VELOCITY;
+            this.position.x += this.VELOCITY;
         } else if (this.direction === 0) {
-            this.x -= VELOCITY;
+            this.position.x -= this.VELOCITY;
         }
     }
     

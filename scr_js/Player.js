@@ -1,11 +1,6 @@
 // import Entity from './Entity';
 
 class Player extends Entity{
-    /**
-     * 
-     * @param {object} animations - Objeto que deve conter todas as animações do objeto 
-     * @param {string} standart - animação padrão do objeto
-     */
     constructor(animations={}){
         super(animations);
 
