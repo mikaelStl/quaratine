@@ -5,13 +5,17 @@ class Player extends Entity{
         super(animations);
 
         this.position = {
-            x: Math.round(320-(this.size.width/2)),
-            y: Math.round(320-(this.size.height/2))
+            x: Math.round((WIDTH/2)-(this.size.width/2)),
+            y: Math.round((HEIGHT/2)-(this.size.height/2))
         };
 
         this.weapon = new Weapon(
-                        {standart: new Sprite('./img/weapon.png', 1, 0)},
-                        {x: this.position.x+10, y: this.position.y+10}
+                        {standart: new Sprite('./img/weapon.png', 2, 48),
+                         standartL: new Sprite('./img/weapon-l.png', 2, 48),
+                         shoot: new Sprite('./img/shooting.png', 6, 2),
+                         shootL: new Sprite('./img/shooting-l.png', 6, 2)
+                        },
+                        {x: this.position.x+7, y: this.position.y+7}
                     );
 
         this.inventory = [];
@@ -27,11 +31,13 @@ class Player extends Entity{
             case keys.down: this.position.y += this.velocity;
                 break;
             case keys.right: this.position.x += this.velocity;
+                             this.direction = 1;
                 break;
             case keys.left: this.position.x -= this.velocity;
+                            this.direction = -1;
                 break;
         }
-        this.weapon.move(this.position);
+        this.weapon.move(this.position, this.direction);
     }
 
     stop(){

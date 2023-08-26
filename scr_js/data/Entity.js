@@ -23,6 +23,8 @@ class Entity{
             max: 100
         };
         this.dead;
+
+        this.direction = 1;
     }
 
     update(){
@@ -31,6 +33,9 @@ class Entity{
     }
 
     draw(screen, path){
+        if (this.direction === -1) {
+            path = path + 'L';
+        }
         if (!this.img) return;
 
         this.setImg(path);

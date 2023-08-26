@@ -1,6 +1,10 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
+const body = document.querySelector('body');
+const WIDTH = body.clientWidth;
+const HEIGHT = body.clientHeight;
+
 const keys = {
     up: 'w',
     down: 's',
@@ -12,8 +16,8 @@ const keys = {
     cure: 'q'
 }
 
-canvas.width = 640;
-canvas.height = 640;
+canvas.width = WIDTH;
+canvas.height = HEIGHT;
 
 // const scaledCanvas = {
 //     width: canvas.width / 4,
@@ -23,43 +27,48 @@ canvas.height = 640;
 const back = new Image();
 back.src = './img/background.png';
 
-const spawn = new Spawn();
+const spawn = new Spawn(0, 0, 230, 320, 2);
 const zombies = [];
-// Spawn.spawnZombie(zombies);
+// spawn.spawnZombie(zombies);
 
 const player = new Player({
     standart: new Sprite('./img/idle.png', 2, 48),
-    walk: new Sprite('./img/walk.png', 8, 8)
+    standartL: new Sprite('./img/idle-l.png', 2, 48),
+    // walk: new Sprite('./img/walk.png', 8, 8)
 });
+
+function colider() {
+    
+}
 
 function start() {
     window.requestAnimationFrame(start);
+
+    c.clearRect(0, 0, WIDTH, HEIGHT);
     
-    c.drawImage(back, 0, 0);
-
-    if (player.moving) {
-        player.draw(c, 'walk');
-    } else {
-        player.draw(c, 'standart');
-    }
-
-    // if (!shooting) {
-    //     weapon.draw(c, 'standart');
-    // } else {
-    //     weapon.draw(c, 'shooting');
-    // }
+    spawn.draw();
+    
+    // c.drawImage(back, 0, 0);
 
     for (const shot of player.weapon.shots) {
         shot.draw(c, 'standart');
         shot.move();
     }
 
-    for (const zombie of zombies) {
-        zombie.draw(c, 'standart');
-        zombie.walkX(player);
-        zombie.walkY(player);
+    // if (player.moving) {
+    //     player.draw(c, 'walk');
+    // } else {
+        player.draw(c, 'standart');
+    // }
+
+    if (!player.weapon.shooting) {
+        player.weapon.draw(c, 'standart');
+    } else {
+        player.weapon.draw(c, 'shoot');
     }
 
-    player.weapon.draw(c, 'standart');
+    for (const zombie of zombies) {
+        zombie.draw(c, 'standart');
+    }
 }
 start();

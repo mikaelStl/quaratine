@@ -19,7 +19,7 @@ class Shot extends Entity{
     move(){
         if (this.direction === 1) {
             this.position.x += this.VELOCITY;
-        } else if (this.direction === 0) {
+        } else if (this.direction === -1) {
             this.position.x -= this.VELOCITY;
         }
     }

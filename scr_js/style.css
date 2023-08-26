@@ -8,9 +8,5 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: black;
-}
-
-img .invert{
-    scale: -1;
+    background-color: #6E823E;
 }

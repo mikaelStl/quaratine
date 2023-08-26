@@ -32,14 +32,14 @@ window.addEventListener('keyup', (evt)=>{
 //to-do
 window.addEventListener('mousedown', (evt) =>{
     switch (evt.buttons) {
-        case 1: shooting = true;
+        case 1: player.weapon.shooting = true;
                 player.weapon.shoot();
-                console.log(player.weapon.shots);
+                // console.log(player.weapon.shots);
             break;
         case 2: //mirar
             break;
     }
 });
 window.addEventListener('mouseup', (evt)=>{
-    shooting = false;
+    player.weapon.shooting = false;
 });

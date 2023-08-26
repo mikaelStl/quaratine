@@ -13,23 +13,26 @@ class Weapon extends Entity{
             total: 120
         }
         this.damage = 25;
-        this.magCapacity = 30;
-        this.totalAmmo = 90;
 
         this.shots = [];
+        this.shooting = false;
     }
 
-    move(pst = {}){
+    move(pst = {}, d){
         this.position = {
-            x: pst.x+10,
-            y: pst.y+10
+            x: pst.x+7,
+            y: pst.y+7
         };
+        this.direction = d;
     }
 
     //Método para atirar
     shoot(){
         if(this.mag.standart > 0){
-            this.shots.push(new Shot((this.position.x + this.size.width), (this.position.y+5), 1, {standart: new Sprite('./img/shot.png', 1, 0)}));
+            this.shots.push(new Shot((this.position.x + this.size.width), (this.position.y+5), this.direction, 
+                                {standart: new Sprite('./img/shot.png', 1, 0),
+                                 standartL: new Sprite('./img/shot-l.png', 1, 0),
+                                }));
             this.mag.standart -= 1;
         }
     }
