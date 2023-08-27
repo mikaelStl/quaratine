@@ -12,21 +12,19 @@ class Shot extends Entity{
         this.damage = 25;
         this.direction = direction;
 
-        this.VELOCITY = 10;
+        this.velocity = 10;
     }
     /*1: DIREITA*/
     /*0: ESQUERDA*/
     move(){
-        if (this.direction === 1) {
-            this.position.x += this.VELOCITY;
-        } else if (this.direction === -1) {
-            this.position.x -= this.VELOCITY;
+        if (!this.direction) {
+            this.position.x += this.velocity;
+        } else {
+            this.position.x -= this.velocity;
         }
     }
     
     hit(z=Zombie()){
-        if (getBounds().intersects(z.getBounds())) {
-            z.takeDamage(damage);
-        }
+        z.takeDamage(this.damage);
     }
 }

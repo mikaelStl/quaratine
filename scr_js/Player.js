@@ -31,10 +31,10 @@ class Player extends Entity{
             case keys.down: this.position.y += this.velocity;
                 break;
             case keys.right: this.position.x += this.velocity;
-                             this.direction = 1;
+                             this.direction = false;
                 break;
             case keys.left: this.position.x -= this.velocity;
-                            this.direction = -1;
+                            this.direction = true;
                 break;
         }
         this.weapon.move(this.position, this.direction);

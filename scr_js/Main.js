@@ -29,7 +29,7 @@ back.src = './img/background.png';
 
 const spawn = new Spawn(0, 0, 230, 320, 2);
 const zombies = [];
-// spawn.spawnZombie(zombies);
+spawn.spawnZombie(zombies);
 
 const player = new Player({
     standart: new Sprite('./img/idle.png', 2, 48),
@@ -38,8 +38,48 @@ const player = new Player({
 });
 
 function colider() {
-    
+    for (const shot of player.weapon.shots) {
+        for (const zombie of zombies) {
+            if(Entity.touch(shot, zombie)){
+                shot.hit(zombie);
+                player.weapon.shots.splice(player.weapon.shots.indexOf(shot, 0), 1);
+                // console.log('tocou');
+            }
+        }
+    }
 }
+
+// void checkColision(){
+
+//     for (int m = 0; m < shots.size(); m++) {
+//         Shot shot = shots.get(m);
+//         shotBox = shot.getBounds();
+//         for (int s = 0; s < enemies.size(); s++) {
+//             Zombie zombie = enemies.get(s);
+//             if (shotBox.intersects(zombie.getBounds())) {
+//                 shot.hitZombie(zombie);
+//                 if (zombie.getLife() <= 0) {
+//                     if (zombie.getItem() != null) {
+//                         items.add(Spawn.spawnItem(zombie));
+//                     }
+//                     enemies.remove(zombie);
+//                 }
+//                 shots.remove(shot);
+//             }
+//         }
+//     }
+
+//     for (int f = 0; f < items.size(); f++) {
+//         Item item = items.get(f);
+//         if (item != null) {
+//             item.getBounds();
+//             if (Entity.touch(player, item)) {
+//                 player.addItem(item);
+//                 items.remove(f);
+//             }
+//         }
+//     }
+// }
 
 function start() {
     window.requestAnimationFrame(start);
@@ -70,5 +110,6 @@ function start() {
     for (const zombie of zombies) {
         zombie.draw(c, 'standart');
     }
+    colider();
 }
 start();

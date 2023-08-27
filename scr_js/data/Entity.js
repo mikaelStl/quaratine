@@ -24,7 +24,7 @@ class Entity{
         };
         this.dead;
 
-        this.direction = 1;
+        this.direction = false; //false: to right; true: to left
     }
 
     update(){
@@ -32,36 +32,49 @@ class Entity{
         this.setLifeBar(this.life.bar, this.life.value);
     }
 
-    draw(screen, path){
-        if (this.direction === -1) {
-            path = path + 'L';
-        }
+    draw(ctx, path){
         if (!this.img) return;
 
         this.setImg(path);
-
         this.update();
-        screen.drawImage(
-            this.img,
-            //image crop
-            this.animations[path].current * this.size.width,
-            0,
-            this.size.width,
-            this.size.height,
-            //original image
-            this.position.x,
-            this.position.y,
-            this.size.width,
-            this.size.height
-        );
-        // this.hitbox.draw(screen);
-        this.animations[path].animate();
-        screen.fillStyle = 'red';
-        screen.fill();
-    }
 
-    invert(){
-        //to-do
+        //logic to draw invert or normal image
+        if (this.direction) {
+            ctx.save();
+            ctx.scale(-1, 1);
+            ctx.drawImage(
+                this.img,
+                //image crop
+                this.animations[path].current * this.size.width,
+                0,
+                this.size.width,
+                this.size.height,
+                //original image
+                -this.position.x - this.size.width,
+                this.position.y,
+                this.size.width,
+                this.size.height
+            );
+            ctx.restore();
+        } else {
+            ctx.drawImage(
+                this.img,
+                //image crop
+                this.animations[path].current * this.size.width,
+                0,
+                this.size.width,
+                this.size.height,
+                //original image
+                this.position.x,
+                this.position.y,
+                this.size.width,
+                this.size.height
+            );
+        }
+        this.hitbox.draw(ctx);
+        this.animations[path].animate();
+        ctx.fillStyle = 'red';
+        ctx.fill();
     }
 
     static touch(ent1 = Entity(), ent2 = Entity()){
@@ -70,7 +83,7 @@ class Entity{
         return ent1B.intersects(ent2B);
     }
 
-    takeDamage(damage){
+    take_damage(damage){
         //to-do
     }
 

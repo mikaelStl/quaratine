@@ -51,12 +51,16 @@ class Zombie extends Entity{
     }
     // Método para baixar vida
     takeDamage(damage){
-        if (this.lifeValue > 0) {
-            this.lifeValue -= damage;
-            setLifeBar(getBarWidth(), this.lifeValue);
-        } else if (lifeValue <= 0) {
-            this.dead=true;
+        if (this.life.value > 0) {
+            this.life.value -= damage;
+            console.log(this.life);
         }
+        // if (this.lifeValue > 0) {
+        //     this.lifeValue -= damage;
+        //     setLifeBar(getBarWidth(), this.lifeValue);
+        // } else if (lifeValue <= 0) {
+        //     this.dead=true;
+        // }
     }
     //Método para atacar
     attack(p = Player()){
