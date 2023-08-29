@@ -2,7 +2,7 @@
 
 class Zombie extends Entity{
     //Construtor
-    constructor(x=Number(), y=Number(),animations={}){
+    constructor(x=Number(), y=Number(),animations={}, item){
         super(animations);
         
         this.position = {
@@ -13,7 +13,7 @@ class Zombie extends Entity{
         this.velocity = 1;
         this.dead = false;
 
-        // this.item = null;
+        this.item = item;
 
         this.interval = 800;
     }
@@ -53,7 +53,6 @@ class Zombie extends Entity{
     take_damage(damage){
         if (this.life.value > 0) {
             this.life.value -= damage;
-            console.log(this.life);
         } if (this.life.value <= 0) {
             this.dead=true;
         }

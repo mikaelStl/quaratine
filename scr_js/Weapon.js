@@ -46,7 +46,7 @@ class Weapon extends Entity{
     }
     //Método para adicionar mais munição no inventário
     addAmmo(ammo){
-        this.totalAmmo += ammo;
+        this.mag.total += ammo;
         console.log(this.mag.total);
     }
 }

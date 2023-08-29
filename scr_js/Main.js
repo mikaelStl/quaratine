@@ -27,9 +27,11 @@ canvas.height = HEIGHT;
 const back = new Image();
 back.src = './img/background.png';
 
-const spawn = new Spawn(0, 0, 230, 320, 2);
+const spawn = new Spawn(0, 0, 230, 320, 12);
 const zombies = [];
 spawn.spawnZombie(zombies);
+
+const items = [];
 
 const player = new Player({
     standart: new Sprite('./img/idle.png', 2, 48),
@@ -43,6 +45,8 @@ function colider() {
             if(Entity.touch(shot, zombie)){
                 shot.hit(zombie);
                 if (zombie.dead) {
+                    items.push(zombie.item);
+                    console.log(items);
                     zombies.splice(zombies.indexOf(zombie, 0), 1);
                 }
                 player.weapon.shots.splice(player.weapon.shots.indexOf(shot, 0), 1);
@@ -50,38 +54,6 @@ function colider() {
         }
     }
 }
-
-// void checkColision(){
-
-//     for (int m = 0; m < shots.size(); m++) {
-//         Shot shot = shots.get(m);
-//         shotBox = shot.getBounds();
-//         for (int s = 0; s < enemies.size(); s++) {
-//             Zombie zombie = enemies.get(s);
-//             if (shotBox.intersects(zombie.getBounds())) {
-//                 shot.hitZombie(zombie);
-//                 if (zombie.getLife() <= 0) {
-//                     if (zombie.getItem() != null) {
-//                         items.add(Spawn.spawnItem(zombie));
-//                     }
-//                     enemies.remove(zombie);
-//                 }
-//                 shots.remove(shot);
-//             }
-//         }
-//     }
-
-//     for (int f = 0; f < items.size(); f++) {
-//         Item item = items.get(f);
-//         if (item != null) {
-//             item.getBounds();
-//             if (Entity.touch(player, item)) {
-//                 player.addItem(item);
-//                 items.remove(f);
-//             }
-//         }
-//     }
-// }
 
 function start() {
     window.requestAnimationFrame(start);

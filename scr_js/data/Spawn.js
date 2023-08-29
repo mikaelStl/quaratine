@@ -29,33 +29,23 @@ class Spawn {
 
     spawnZombie(enemies = []){
         for (let i = 0; i < this.quant; i++) {
-            enemies.push(new Zombie(this.#generateX(), this.#generateY(), {standart: new Sprite('./img/z-model.png', 1, 1)}));
+            enemies.push(new Zombie(this.#generateX(), this.#generateY(), {standart: new Sprite('./img/z-model.png', 1, 1)}, this.#generateItem()));
         }
     }
 
-    static generateItem(enemies = []){
-        if (enemies.length > 0) {
-            const quant = 2;
-
-            for (let j = 0; j < quant; j++) {
-                // const rand = (Math.round(Math.random() * enemies.length));
-                const rand2 =  (Math.random() * 1);
-
-                // if(rand < enemies.length) {
-                    // const z = enemies[rand];
-                    if (enemies[j].item === null) {
-                        if (rand2 < 0.5) {
-                            enemies[j].item = new Bandage({standart: new Sprite('./img/bandage.png', 1, 0)});
-                        } else if (rand2 > 0.5){
-                            enemies[j].item = new Ammo({standart: new Sprite('./img/ammo.png', 1, 0)});
-                        }                            
-                    }
-                // }
-            }
+    #generateItem(){
+        const rand = (Math.random() * 1);
+        
+        if (rand < 0.21) {
+            return new Bandage({standart: new Sprite('./img/bandage.png', 1, 0)});
+        } else if (rand >= 0.21 && rand < 0.34){
+            return new Ammo({standart: new Sprite('./img/ammo.png', 1, 0)});
+        } else {
+            return null;
         }
     }
 
-    static spawnItem(z=Zombie()){
+    spawnItem(z=Zombie()){
         if (z.item != null) {
             const i = z.item;
             i.position.x = Math.round((z.position.x + (z.size.width/2)));
