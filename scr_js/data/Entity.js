@@ -1,5 +1,3 @@
-// h = Number(), w = Number(), x = Number(), y = Number(),
-
 class Entity{
     /**
      * 
@@ -22,14 +20,14 @@ class Entity{
             value: 100,
             max: 100
         };
-        this.dead;
+        this.dead = false;
 
         this.direction = false; //false: to right; true: to left
     }
 
     update(){
+        this.draw_life(/* this.life.bar, this.life.value */);
         this.hitbox.update(this.position);
-        this.setLifeBar(this.life.bar, this.life.value);
     }
 
     draw(ctx, path){
@@ -73,7 +71,6 @@ class Entity{
         }
         this.hitbox.draw(ctx);
         this.animations[path].animate();
-        ctx.fillStyle = 'red';
         ctx.fill();
     }
 
@@ -87,11 +84,10 @@ class Entity{
         //to-do
     }
 
-    setLifeBar(width = Number(), newValue = Number()){
-        const tamBar = (width * newValue)/this.life.max;
-        this.life.bar = tamBar;
-        c.beginPath();
-        c.rect(this.position.x, this.position.y-6, tamBar, 3);
+    draw_life(/* width = Number(), value = Number() */){
+        const tamBar = (this.life.bar * this.life.value)/this.life.max;
+        c.fillStyle = 'red';
+        c.fillRect(this.position.x, this.position.y-6, tamBar, 3);
     }
 
     setImg(path){

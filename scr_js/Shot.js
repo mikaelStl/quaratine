@@ -25,6 +25,6 @@ class Shot extends Entity{
     }
     
     hit(z=Zombie()){
-        z.takeDamage(this.damage);
+        z.take_damage(this.damage);
     }
 }

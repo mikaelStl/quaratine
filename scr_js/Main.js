@@ -42,8 +42,10 @@ function colider() {
         for (const zombie of zombies) {
             if(Entity.touch(shot, zombie)){
                 shot.hit(zombie);
+                if (zombie.dead) {
+                    zombies.splice(zombies.indexOf(zombie, 0), 1);
+                }
                 player.weapon.shots.splice(player.weapon.shots.indexOf(shot, 0), 1);
-                // console.log('tocou');
             }
         }
     }
