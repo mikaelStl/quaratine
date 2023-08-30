@@ -19,20 +19,25 @@ class Weapon extends Entity{
     }
 
     move(pst = {}, d){
-        this.position = {
-            x: pst.x+7,
-            y: pst.y+7
-        };
         this.direction = d;
+        if (this.direction) {
+            this.position = {
+                x: pst.x-24,
+                y: pst.y+7
+            };
+        } else {
+            this.position = {
+                x: pst.x+7,
+                y: pst.y+7
+            };
+        }
     }
 
     //Método para atirar
     shoot(){
         if(this.mag.standart > 0){
-            this.shots.push(new Shot((this.position.x + this.size.width), (this.position.y+5), this.direction, 
-                                {standart: new Sprite('./img/shot.png', 1, 0),
-                                 standartL: new Sprite('./img/shot-l.png', 1, 0),
-                                }));
+            this.shots.push(new Shot((this.position.x + this.size.width/2), (this.position.y+5), this.direction, 
+                                {standart: new Sprite('./img/shot.png', 1, 0)}));
             this.mag.standart -= 1;
         }
     }

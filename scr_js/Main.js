@@ -27,7 +27,7 @@ canvas.height = HEIGHT;
 const back = new Image();
 back.src = './img/background.png';
 
-const spawn = new Spawn(0, 0, 230, 320, 2);
+const spawn = new Spawn(0, 0, 230, 320, 12);
 const zombies = [];
 spawn.spawnZombie(zombies);
 
@@ -44,7 +44,7 @@ function colider() {
             if(Entity.touch(shot, zombie)){
                 shot.hit(zombie);
                 if (zombie.dead) {
-                    items.push(zombie.item);
+                    items.push(spawn.spawnItem(zombie));
                     zombies.splice(zombies.indexOf(zombie, 0), 1);
                 }
                 player.weapon.shots.splice(player.weapon.shots.indexOf(shot, 0), 1);

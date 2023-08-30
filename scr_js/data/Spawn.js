@@ -49,7 +49,7 @@ class Spawn {
         if (z.item != null) {
             const i = z.item;
             i.position.x = Math.round((z.position.x + (z.size.width/2)));
-            i.position.y = z.position.y + z.size.height;
+            i.position.y = z.position.y + (z.size.height-i.size.height);
             return i;
         } else {
             return null;
