@@ -12,7 +12,7 @@ class Shot extends Entity{
         this.damage = 25;
         this.direction = direction;
 
-        this.velocity = 10;
+        this.velocity = 12;
     }
     /*1: DIREITA*/
     /*0: ESQUERDA*/

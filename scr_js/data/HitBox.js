@@ -1,11 +1,18 @@
 class HitBox{
-    constructor(position = {}, size = {}){
-        this.position = {...position};
-        this.size = {...size};
+    constructor(x, y, width, height){
+        this.position = {
+            x: x,
+            y: y
+        };
+        this.size = {
+            width: width,
+            height: height
+        };
     }
 
-    update(position){
-        this.position = {...position};
+    update(x, y){
+        this.position.x = x;
+        this.position.y = y;
     }
 
     intersects(box = HitBox()) {

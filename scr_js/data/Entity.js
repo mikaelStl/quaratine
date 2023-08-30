@@ -14,7 +14,7 @@ class Entity{
         };
         this.velocity;
         this.moving = false;
-        this.hitbox = new HitBox(this.position, this.size);
+        this.hitbox = new HitBox(this.position.x, this.position.y, this.size.width, this.size.height);
         this.life = {
             bar: this.size.width,
             value: 100,
@@ -27,7 +27,7 @@ class Entity{
 
     update(){
         this.draw_life(/* this.life.bar, this.life.value */);
-        this.hitbox.update(this.position);
+        this.hitbox.update(this.position.x, this.position.y);
     }
 
     draw(ctx, path){
@@ -81,7 +81,11 @@ class Entity{
     }
 
     take_damage(damage){
-        //to-do
+        if (this.life.value > 0) {
+            this.life.value -= damage;
+        } if (this.life.value <= 0) {
+            this.dead=true;
+        }
     }
 
     draw_life(/* width = Number(), value = Number() */){

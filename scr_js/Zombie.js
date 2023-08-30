@@ -16,6 +16,21 @@ class Zombie extends Entity{
         this.item = item;
 
         this.interval = 800;
+
+        this.area = new HitBox((this.position.x-this.size.width/2), (this.position.y-this.size.height/2), (this.size.width*2), (this.size.height*2));
+
+        this.find = false
+    }
+
+    follow(p = Player()){
+        if (this.find) {
+            this.walkX(p);
+            this.walkY(p);
+        } else if (p.hitbox.intersects(this.area)) {
+            this.find = true;
+        }
+
+        this.area.update((this.position.x-this.size.width/2), (this.position.y-this.size.height/2));
     }
 
     // Método para se mover em reação ao Player
@@ -29,10 +44,6 @@ class Zombie extends Entity{
         } else if (playerPosition == this.position.x){
             this.position.y += 0;
         }
-
-        if (this.hitbox.intersects(p.hitbox)) {
-            this.velocity += 0;
-        }
     }
     walkY(p = Player()){
         const playerPosition = p.position.y;
@@ -43,18 +54,6 @@ class Zombie extends Entity{
             this.position.y -= this.velocity;
         } else if (playerPosition == this.position.y){
             this.position.x += 0;
-        }
-
-        if (this.hitbox.intersects(p.hitbox)) {
-            this.velocity = 0;
-        }
-    }
-    // Método para baixar vida
-    take_damage(damage){
-        if (this.life.value > 0) {
-            this.life.value -= damage;
-        } if (this.life.value <= 0) {
-            this.dead=true;
         }
     }
     //Método para atacar

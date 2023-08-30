@@ -20,11 +20,12 @@ class Player extends Entity{
 
         this.inventory = [];
         this.dead = false;
+        
+        this.velocity = 4;
     }
     
     move(key){
         this.moving = true;
-        this.velocity = 4;
         switch (key) {
             case keys.up: this.position.y -= this.velocity;
                 break;
@@ -56,33 +57,15 @@ class Player extends Entity{
     // }
     
     // Adicionar item ao inventario
-    // addItem(i){
-    //     this.inventory.add(i);
-    // }
+    catch(i=Item()){
+        this.inventory.push(i);
+    }
 
-    //Usar bandagem
-    // useBandage(){
-    //     if (inventory.size() > 0) {
-    //         const cont = 0;
-    //         const b = inventory.get(cont);
-    //         if (lifeValue < life_max) {
-    //             b.function(getPlayer());
-    //             this.inventory.remove(cont);
-    //             cont++;
-    //         } else{
-    //             System.out.println("VIDA CHEIA");
+    // heal(){
+    //     for (const item of this.inventory) {
+    //         if (typeof item === Bandage()) {
+                
     //         }
-    //     } else {
-    //         System.out.println("NÃO POSSUI BANDAGENS");
     //     }
     // }
-
-    //Método para baixar vida
-    takeDamage(damage){
-        this.lifeValue -= damage;
-        setLifeBar(getBarWidth(), this.lifeValue);
-        if (lifeValue <= 0) {
-            Dead();
-        }
-    }
 }
