@@ -13,7 +13,7 @@ class Spawn {
     };
 
     draw(){
-        c.fillStyle = 'rgba(255, 0, 0, 0.2)';
+        c.fillStyle = 'rgba(0, 0, 255, 0.2)';
         c.fillRect(this.position.x, this.position.y, this.size.w, this.size.h);
     }
 

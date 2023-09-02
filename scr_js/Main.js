@@ -27,7 +27,7 @@ canvas.height = HEIGHT;
 const back = new Image();
 back.src = './img/background.png';
 
-const spawn = new Spawn(0, 0, 230, 320, 12);
+const spawn = new Spawn(0, 0, 230, 320, 2);
 const zombies = [];
 spawn.spawnZombie(zombies);
 
@@ -90,9 +90,9 @@ function start() {
     }
 
     for (const zombie of zombies) {
+        zombie.area.draw(c);
         zombie.draw(c, 'standart');
         zombie.follow(player);
-        zombie.area.draw(c);
     }
 
     for (const item of items) {

@@ -19,7 +19,7 @@ class Zombie extends Entity{
 
         this.area = new HitBox((this.position.x-this.size.width/2), (this.position.y-this.size.height/2), (this.size.width*2), (this.size.height*2));
 
-        this.find = false
+        this.find = false;
     }
 
     follow(p = Player()){

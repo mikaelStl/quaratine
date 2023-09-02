@@ -26,11 +26,12 @@ class Entity{
     }
 
     update(){
-        this.draw_life(/* this.life.bar, this.life.value */);
+        this.draw_life();
         this.hitbox.update(this.position.x, this.position.y);
     }
 
     draw(ctx, path){
+        this.hitbox.draw(ctx);
         if (!this.img) return;
 
         this.setImg(path);
@@ -69,9 +70,7 @@ class Entity{
                 this.size.height
             );
         }
-        this.hitbox.draw(ctx);
         this.animations[path].animate();
-        ctx.fill();
     }
 
     static touch(ent1 = Entity(), ent2 = Entity()){
@@ -88,7 +87,7 @@ class Entity{
         }
     }
 
-    draw_life(/* width = Number(), value = Number() */){
+    draw_life(){
         const tamBar = (this.life.bar * this.life.value)/this.life.max;
         c.fillStyle = 'red';
         c.fillRect(this.position.x, this.position.y-6, tamBar, 3);
